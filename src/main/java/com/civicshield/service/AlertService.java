@@ -16,10 +16,13 @@ import java.util.Map;
 
 /** Creates alerts from risk analyses and manages their Active → Acknowledged → Resolved lifecycle. */
 @Service
-@RequiredArgsConstructor
 public class AlertService {
 
     private final AlertRepository alertRepository;
+
+    public AlertService(AlertRepository alertRepository) {
+        this.alertRepository = alertRepository;
+    }
 
     public List<Alert> byStatus(AlertStatus status) {
         return alertRepository.findByAlertStatusOrderByAlertDateDesc(status);

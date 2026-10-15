@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Controller for dedicated cascade risk inspection of an incident.
  */
 @Controller
-@RequiredArgsConstructor
 public class RiskController {
 
     private final IncidentService incidentService;
     private final RiskAnalysisService riskAnalysisService;
+
+    public RiskController(IncidentService incidentService, RiskAnalysisService riskAnalysisService) {
+        this.incidentService = incidentService;
+        this.riskAnalysisService = riskAnalysisService;
+    }
 
     @GetMapping("/portal/risk/{incidentId}")
     public String riskDetail(@PathVariable("incidentId") Long incidentId, Model model) {

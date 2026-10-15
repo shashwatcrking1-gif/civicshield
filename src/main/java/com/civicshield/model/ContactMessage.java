@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "contact_messages")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ContactMessage {
 
@@ -30,6 +28,17 @@ public class ContactMessage {
 
     @Column(nullable = false)
     private LocalDateTime createdDate;
+
+    public ContactMessage() {
+    }
+
+    public ContactMessage(Long id, String name, String email, String message, LocalDateTime createdDate) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.message = message;
+        this.createdDate = createdDate;
+    }
 
     @PrePersist
     void onCreate() {

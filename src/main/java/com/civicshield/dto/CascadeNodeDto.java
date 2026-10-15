@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 /** One node of the cascade chain (e.g. Flood 81%). */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CascadeNodeDto {
     private String key;
@@ -22,4 +20,18 @@ public class CascadeNodeDto {
     private double severity;
     private RiskLevel level;
     private String consequence;
+
+    public CascadeNodeDto() {
+    }
+
+    public CascadeNodeDto(String key, String label, String icon, int probability,
+                          double severity, RiskLevel level, String consequence) {
+        this.key = key;
+        this.label = label;
+        this.icon = icon;
+        this.probability = probability;
+        this.severity = severity;
+        this.level = level;
+        this.consequence = consequence;
+    }
 }

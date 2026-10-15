@@ -13,8 +13,6 @@ import java.util.List;
 
 /** Output of the cascade engine (Java) or the optional Python AI service. */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class SimulationResult {
 
@@ -39,6 +37,24 @@ public class SimulationResult {
     @Builder.Default
     private List<ActionDto> actions = new ArrayList<>();
 
+    public SimulationResult() {
+    }
+
+    public SimulationResult(int riskScore, RiskLevel riskLevel, String zone, String engine,
+                            List<CascadeNodeDto> nodes, List<FactorDto> factors, String explanation,
+                            String breakPoint, List<String> consequences, List<ActionDto> actions) {
+        this.riskScore = riskScore;
+        this.riskLevel = riskLevel;
+        this.zone = zone;
+        this.engine = engine;
+        this.nodes = nodes != null ? nodes : new ArrayList<>();
+        this.factors = factors != null ? factors : new ArrayList<>();
+        this.explanation = explanation;
+        this.breakPoint = breakPoint;
+        this.consequences = consequences != null ? consequences : new ArrayList<>();
+        this.actions = actions != null ? actions : new ArrayList<>();
+    }
+
     /** Finds a node by key (rain, flood, road, traffic, ambulance, hospital). */
     @JsonIgnore
     public CascadeNodeDto node(String key) {
@@ -58,11 +74,18 @@ public class SimulationResult {
 
     /** A recommended action with its priority and the chain node it targets. */
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class ActionDto {
         private String text;
         private Priority priority;
         private String target;
+
+        public ActionDto() {
+        }
+
+        public ActionDto(String text, Priority priority, String target) {
+            this.text = text;
+            this.priority = priority;
+            this.target = target;
+        }
     }
 }

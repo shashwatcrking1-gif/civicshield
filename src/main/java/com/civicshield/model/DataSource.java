@@ -8,8 +8,6 @@ import lombok.*;
 @Table(name = "data_sources")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class DataSource {
 
@@ -29,4 +27,15 @@ public class DataSource {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private DataStatus dataStatus;
+
+    public DataSource() {
+    }
+
+    public DataSource(Long sourceId, String sourceName, String sourceType, String location, DataStatus dataStatus) {
+        this.sourceId = sourceId;
+        this.sourceName = sourceName;
+        this.sourceType = sourceType;
+        this.location = location;
+        this.dataStatus = dataStatus;
+    }
 }

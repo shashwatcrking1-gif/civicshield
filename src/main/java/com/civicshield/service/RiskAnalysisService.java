@@ -22,13 +22,20 @@ import java.util.Optional;
  * stores the analysis and fans out alerts and recommendations.
  */
 @Service
-@RequiredArgsConstructor
 public class RiskAnalysisService {
 
     private final CascadeRiskEngine engine;
     private final RiskAnalysisRepository repository;
     private final AlertService alertService;
     private final RecommendationService recommendationService;
+
+    public RiskAnalysisService(CascadeRiskEngine engine, RiskAnalysisRepository repository,
+                               AlertService alertService, RecommendationService recommendationService) {
+        this.engine = engine;
+        this.repository = repository;
+        this.alertService = alertService;
+        this.recommendationService = recommendationService;
+    }
 
     /**
      * Maps an incident to engine inputs. Weather incidents set the rainfall from severity; other types

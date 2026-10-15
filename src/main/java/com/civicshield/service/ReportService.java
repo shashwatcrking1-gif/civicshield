@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 /** Dashboard aggregates, trends, filtered reports and CSV export. */
 @Service
-@RequiredArgsConstructor
 public class ReportService {
 
     private static final DateTimeFormatter DAY = DateTimeFormatter.ofPattern("dd MMM");
@@ -29,12 +28,26 @@ public class ReportService {
     private final SimulationService simulationService;
     private final CascadeRiskEngine engine;
 
+    public ReportService(IncidentRepository incidentRepository, RiskAnalysisService riskAnalysisService,
+                         AlertService alertService, SimulationService simulationService,
+                         CascadeRiskEngine engine) {
+        this.incidentRepository = incidentRepository;
+        this.riskAnalysisService = riskAnalysisService;
+        this.alertService = alertService;
+        this.simulationService = simulationService;
+        this.engine = engine;
+    }
+
     /** One row of the reports table. */
     @Getter
-    @AllArgsConstructor
     public static class ReportRow {
         private final Incident incident;
         private final RiskAnalysis analysis;
+
+        public ReportRow(Incident incident, RiskAnalysis analysis) {
+            this.incident = incident;
+            this.analysis = analysis;
+        }
     }
 
     public DashboardStats dashboardStats() {

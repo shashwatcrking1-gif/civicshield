@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 
 /** ADMIN form to create or edit a portal user. Password is optional when editing. */
 @Data
-@NoArgsConstructor
 public class UserForm {
+
+    public UserForm() {
+    }
 
     private Long userId;
 

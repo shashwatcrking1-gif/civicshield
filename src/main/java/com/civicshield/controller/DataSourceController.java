@@ -17,10 +17,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/portal/data-sources")
-@RequiredArgsConstructor
 public class DataSourceController {
 
     private final DataSourceService dataSourceService;
+
+    public DataSourceController(DataSourceService dataSourceService) {
+        this.dataSourceService = dataSourceService;
+    }
 
     @GetMapping
     public String dataSourcesPage(Model model) {

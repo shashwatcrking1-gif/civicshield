@@ -13,8 +13,6 @@ import java.util.Map;
 
 /** Aggregated numbers for the portal dashboard. */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class DashboardStats {
     private long activeIncidents;
@@ -37,4 +35,28 @@ public class DashboardStats {
     private String topThreatExplanation;
     @Builder.Default
     private List<CascadeNodeDto> topThreatNodes = new ArrayList<>();
+
+    public DashboardStats() {
+    }
+
+    public DashboardStats(long activeIncidents, long highRiskZones, long criticalAlerts, long simulationsRun,
+                          long totalIncidents, Map<String, Long> riskDistribution, Long topThreatIncidentId,
+                          String topThreatCode, String topThreatLocation, String topThreatType,
+                          Integer topThreatScore, RiskLevel topThreatLevel, String topThreatExplanation,
+                          List<CascadeNodeDto> topThreatNodes) {
+        this.activeIncidents = activeIncidents;
+        this.highRiskZones = highRiskZones;
+        this.criticalAlerts = criticalAlerts;
+        this.simulationsRun = simulationsRun;
+        this.totalIncidents = totalIncidents;
+        this.riskDistribution = riskDistribution != null ? riskDistribution : new LinkedHashMap<>();
+        this.topThreatIncidentId = topThreatIncidentId;
+        this.topThreatCode = topThreatCode;
+        this.topThreatLocation = topThreatLocation;
+        this.topThreatType = topThreatType;
+        this.topThreatScore = topThreatScore;
+        this.topThreatLevel = topThreatLevel;
+        this.topThreatExplanation = topThreatExplanation;
+        this.topThreatNodes = topThreatNodes != null ? topThreatNodes : new ArrayList<>();
+    }
 }

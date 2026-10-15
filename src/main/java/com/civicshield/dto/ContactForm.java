@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 
 /** Public contact form. */
 @Data
-@NoArgsConstructor
 public class ContactForm {
+
+    public ContactForm() {
+    }
 
     @NotBlank(message = "Please tell us your name")
     @Size(max = 100, message = "Name must be at most 100 characters")

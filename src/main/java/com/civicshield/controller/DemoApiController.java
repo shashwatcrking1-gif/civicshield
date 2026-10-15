@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/demo")
-@RequiredArgsConstructor
 public class DemoApiController {
 
     private final SimulationService simulationService;
+
+    public DemoApiController(SimulationService simulationService) {
+        this.simulationService = simulationService;
+    }
 
     @PostMapping("/simulate")
     public ResponseEntity<SimulationResult> simulate(@Valid @RequestBody SimulationRequest request) {

@@ -9,10 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 /** Persists messages from the public contact form. */
 @Service
-@RequiredArgsConstructor
 public class ContactService {
 
     private final ContactMessageRepository repository;
+
+    public ContactService(ContactMessageRepository repository) {
+        this.repository = repository;
+    }
 
     @Transactional
     public ContactMessage save(ContactForm form) {

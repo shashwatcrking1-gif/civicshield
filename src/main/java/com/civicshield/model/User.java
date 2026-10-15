@@ -8,8 +8,6 @@ import lombok.*;
 @Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class User {
 
@@ -34,6 +32,18 @@ public class User {
     @Builder.Default
     @Column(nullable = false)
     private boolean enabled = true;
+
+    public User() {
+    }
+
+    public User(Long userId, String name, String email, String password, Role role, boolean enabled) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.enabled = enabled;
+    }
 
     /** Two-letter initials for avatars. */
     public String getInitials() {

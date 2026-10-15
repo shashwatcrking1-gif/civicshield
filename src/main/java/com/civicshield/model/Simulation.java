@@ -8,8 +8,6 @@ import lombok.*;
 @Table(name = "simulations")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Simulation {
 
@@ -35,4 +33,18 @@ public class Simulation {
 
     @Column(length = 1000)
     private String result;
+
+    public Simulation() {
+    }
+
+    public Simulation(Long simulationId, User createdBy, String scenarioName, Double rainfallLevel,
+                      Double trafficLevel, Double predictedRisk, String result) {
+        this.simulationId = simulationId;
+        this.createdBy = createdBy;
+        this.scenarioName = scenarioName;
+        this.rainfallLevel = rainfallLevel;
+        this.trafficLevel = trafficLevel;
+        this.predictedRisk = predictedRisk;
+        this.result = result;
+    }
 }

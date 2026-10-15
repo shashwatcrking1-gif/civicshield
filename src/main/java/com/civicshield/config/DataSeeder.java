@@ -24,7 +24,6 @@ import java.util.List;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class DataSeeder implements CommandLineRunner {
 
     private final UserService userService;
@@ -34,6 +33,19 @@ public class DataSeeder implements CommandLineRunner {
     private final RecommendationRepository recommendationRepository;
     private final DataSourceRepository dataSourceRepository;
     private final SimulationService simulationService;
+
+    public DataSeeder(UserService userService, IncidentRepository incidentRepository,
+                      RiskAnalysisService riskAnalysisService, AlertRepository alertRepository,
+                      RecommendationRepository recommendationRepository, DataSourceRepository dataSourceRepository,
+                      SimulationService simulationService) {
+        this.userService = userService;
+        this.incidentRepository = incidentRepository;
+        this.riskAnalysisService = riskAnalysisService;
+        this.alertRepository = alertRepository;
+        this.recommendationRepository = recommendationRepository;
+        this.dataSourceRepository = dataSourceRepository;
+        this.simulationService = simulationService;
+    }
 
     @Value("${civicshield.seed.enabled:true}")
     private boolean enabled;

@@ -20,12 +20,17 @@ import java.util.Locale;
 
 /** Incident CRUD, search and status workflow. */
 @Service
-@RequiredArgsConstructor
 public class IncidentService {
 
     private final IncidentRepository repository;
     private final RiskAnalysisService riskAnalysisService;
     private final AlertService alertService;
+
+    public IncidentService(IncidentRepository repository, RiskAnalysisService riskAnalysisService, AlertService alertService) {
+        this.repository = repository;
+        this.riskAnalysisService = riskAnalysisService;
+        this.alertService = alertService;
+    }
 
     public Incident get(Long id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Incident", id));

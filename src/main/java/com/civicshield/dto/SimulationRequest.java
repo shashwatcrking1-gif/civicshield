@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
  * The intervention flags let authorities test how to "break the chain".
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class SimulationRequest {
 
@@ -48,4 +46,22 @@ public class SimulationRequest {
 
     /** Persist the scenario (portal only). */
     private boolean save;
+
+    public SimulationRequest() {
+    }
+
+    public SimulationRequest(String scenarioName, String zone, Double rainfall, Double traffic,
+                             Double drainage, boolean pumps, boolean diversion, boolean greenCorridor,
+                             boolean hospitalSurge, boolean save) {
+        this.scenarioName = scenarioName;
+        this.zone = zone;
+        this.rainfall = rainfall;
+        this.traffic = traffic;
+        this.drainage = drainage;
+        this.pumps = pumps;
+        this.diversion = diversion;
+        this.greenCorridor = greenCorridor;
+        this.hospitalSurge = hospitalSurge;
+        this.save = save;
+    }
 }

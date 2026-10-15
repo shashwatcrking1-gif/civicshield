@@ -19,12 +19,15 @@ import java.util.Map;
  * human decision.
  */
 @Service
-@RequiredArgsConstructor
 public class RecommendationService {
 
     private static final int MAX_PER_ANALYSIS = 4;
 
     private final RecommendationRepository repository;
+
+    public RecommendationService(RecommendationRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Recommendation> list(RecommendationStatus status) {
         return status == null ? repository.findAllByOrderByRecommendationIdDesc()

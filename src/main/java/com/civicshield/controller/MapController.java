@@ -23,12 +23,17 @@ import java.util.Map;
  * Interactive Leaflet risk map view and GeoJSON/JSON incident markers endpoint.
  */
 @Controller
-@RequiredArgsConstructor
 public class MapController {
 
     private final IncidentService incidentService;
     private final RiskAnalysisService riskAnalysisService;
     private final CascadeRiskEngine engine;
+
+    public MapController(IncidentService incidentService, RiskAnalysisService riskAnalysisService, CascadeRiskEngine engine) {
+        this.incidentService = incidentService;
+        this.riskAnalysisService = riskAnalysisService;
+        this.engine = engine;
+    }
 
     @GetMapping("/portal/map")
     public String mapPage(Model model) {

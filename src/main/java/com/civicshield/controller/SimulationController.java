@@ -23,12 +23,17 @@ import java.util.Map;
  * Controller for the full What-If Simulator in the portal (BEFORE vs AFTER, curves, saved scenarios).
  */
 @Controller
-@RequiredArgsConstructor
 public class SimulationController {
 
     private final SimulationService simulationService;
     private final CascadeRiskEngine engine;
     private final UserService userService;
+
+    public SimulationController(SimulationService simulationService, CascadeRiskEngine engine, UserService userService) {
+        this.simulationService = simulationService;
+        this.engine = engine;
+        this.userService = userService;
+    }
 
     @GetMapping("/portal/simulator")
     public String simulatorPage(Model model) {

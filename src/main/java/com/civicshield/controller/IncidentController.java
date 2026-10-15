@@ -23,7 +23,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/portal/incidents")
-@RequiredArgsConstructor
 public class IncidentController {
 
     private final IncidentService incidentService;
@@ -32,6 +31,17 @@ public class IncidentController {
     private final RecommendationService recommendationService;
     private final UserService userService;
     private final CascadeRiskEngine engine;
+
+    public IncidentController(IncidentService incidentService, RiskAnalysisService riskAnalysisService,
+                              AlertService alertService, RecommendationService recommendationService,
+                              UserService userService, CascadeRiskEngine engine) {
+        this.incidentService = incidentService;
+        this.riskAnalysisService = riskAnalysisService;
+        this.alertService = alertService;
+        this.recommendationService = recommendationService;
+        this.userService = userService;
+        this.engine = engine;
+    }
 
     @GetMapping
     public String listIncidents(@RequestParam(value = "q", required = false) String q,

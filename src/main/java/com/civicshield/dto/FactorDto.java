@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 /** Explainable-AI factor: how much an input contributed to the risk score. */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class FactorDto {
     private String key;
@@ -18,4 +16,15 @@ public class FactorDto {
     /** Share of the total risk contribution in percent (all factors sum to ~100). */
     private int contribution;
     private String description;
+
+    public FactorDto() {
+    }
+
+    public FactorDto(String key, String name, int value, int contribution, String description) {
+        this.key = key;
+        this.name = name;
+        this.value = value;
+        this.contribution = contribution;
+        this.description = description;
+    }
 }

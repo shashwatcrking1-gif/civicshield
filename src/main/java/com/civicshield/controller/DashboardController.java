@@ -21,12 +21,17 @@ import java.util.Map;
  * Authority portal dashboard and associated JSON endpoints for live stats and charts.
  */
 @Controller
-@RequiredArgsConstructor
 public class DashboardController {
 
     private final ReportService reportService;
     private final AlertService alertService;
     private final IncidentService incidentService;
+
+    public DashboardController(ReportService reportService, AlertService alertService, IncidentService incidentService) {
+        this.reportService = reportService;
+        this.alertService = alertService;
+        this.incidentService = incidentService;
+    }
 
     @GetMapping({"/portal", "/portal/dashboard"})
     public String dashboard(Model model) {

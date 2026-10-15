@@ -8,8 +8,6 @@ import lombok.*;
 @Table(name = "recommendations")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Recommendation {
 
@@ -31,4 +29,16 @@ public class Recommendation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private RecommendationStatus status;
+
+    public Recommendation() {
+    }
+
+    public Recommendation(Long recommendationId, RiskAnalysis riskAnalysis, String action,
+                          Priority priority, RecommendationStatus status) {
+        this.recommendationId = recommendationId;
+        this.riskAnalysis = riskAnalysis;
+        this.action = action;
+        this.priority = priority;
+        this.status = status;
+    }
 }

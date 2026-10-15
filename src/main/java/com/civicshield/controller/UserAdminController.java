@@ -21,10 +21,13 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/portal/admin/users")
-@RequiredArgsConstructor
 public class UserAdminController {
 
     private final UserService userService;
+
+    public UserAdminController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public String listUsers(Model model) {

@@ -15,10 +15,13 @@ import java.util.Map;
 
 /** Registry of the (simulated) data feeds CivicShield consumes. */
 @Service
-@RequiredArgsConstructor
 public class DataSourceService {
 
     private final DataSourceRepository repository;
+
+    public DataSourceService(DataSourceRepository repository) {
+        this.repository = repository;
+    }
 
     public List<DataSource> all() {
         return repository.findAll(Sort.by("sourceType", "sourceName"));

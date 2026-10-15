@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 
 /** Form backing object for "Report Incident". */
 @Data
-@NoArgsConstructor
 public class IncidentForm {
+
+    public IncidentForm() {
+    }
 
     @NotNull(message = "Select an incident type")
     private IncidentType incidentType;

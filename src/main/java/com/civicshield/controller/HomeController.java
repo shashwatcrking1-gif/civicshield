@@ -18,11 +18,15 @@ import java.util.List;
  * Public website pages (no login needed).
  */
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
 
     private final CascadeRiskEngine engine;
     private final SimulationService simulationService;
+
+    public HomeController(CascadeRiskEngine engine, SimulationService simulationService) {
+        this.engine = engine;
+        this.simulationService = simulationService;
+    }
 
     @GetMapping("/")
     public String home(Model model) {

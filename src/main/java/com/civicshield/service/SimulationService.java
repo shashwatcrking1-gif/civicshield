@@ -14,12 +14,17 @@ import java.util.*;
 
 /** What-If simulations for the public demo and the authority portal. */
 @Service
-@RequiredArgsConstructor
 public class SimulationService {
 
     private final AiClientService aiClientService;
     private final CascadeRiskEngine engine;
     private final SimulationRepository repository;
+
+    public SimulationService(AiClientService aiClientService, CascadeRiskEngine engine, SimulationRepository repository) {
+        this.aiClientService = aiClientService;
+        this.engine = engine;
+        this.repository = repository;
+    }
 
     /** Public demo – no persistence, interventions ignored. */
     public SimulationResult runPublic(SimulationRequest request) {

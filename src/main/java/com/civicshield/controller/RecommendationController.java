@@ -17,10 +17,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/portal/recommendations")
-@RequiredArgsConstructor
 public class RecommendationController {
 
     private final RecommendationService recommendationService;
+
+    public RecommendationController(RecommendationService recommendationService) {
+        this.recommendationService = recommendationService;
+    }
 
     @GetMapping
     public String recommendationsPage(@RequestParam(value = "status", required = false) RecommendationStatus status,

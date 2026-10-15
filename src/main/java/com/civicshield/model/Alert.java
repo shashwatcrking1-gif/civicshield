@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "alerts")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Alert {
 
@@ -36,4 +34,17 @@ public class Alert {
 
     @Column(nullable = false)
     private LocalDateTime alertDate;
+
+    public Alert() {
+    }
+
+    public Alert(Long alertId, RiskAnalysis riskAnalysis, String message, Priority priority,
+                 AlertStatus alertStatus, LocalDateTime alertDate) {
+        this.alertId = alertId;
+        this.riskAnalysis = riskAnalysis;
+        this.message = message;
+        this.priority = priority;
+        this.alertStatus = alertStatus;
+        this.alertDate = alertDate;
+    }
 }
