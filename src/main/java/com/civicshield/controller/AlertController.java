@@ -3,7 +3,6 @@ package com.civicshield.controller;
 import com.civicshield.model.Alert;
 import com.civicshield.model.AlertStatus;
 import com.civicshield.service.AlertService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +16,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/portal/alerts")
-@RequiredArgsConstructor
 public class AlertController {
 
     private final AlertService alertService;
+
+    public AlertController(AlertService alertService) {
+        this.alertService = alertService;
+    }
 
     @GetMapping
     public String alertsPage(@RequestParam(value = "status", defaultValue = "ACTIVE") AlertStatus status,
