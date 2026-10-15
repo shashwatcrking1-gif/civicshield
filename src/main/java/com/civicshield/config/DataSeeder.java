@@ -23,6 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@SuppressWarnings("null")
 public class DataSeeder implements CommandLineRunner {
 
     private final UserService userService;
