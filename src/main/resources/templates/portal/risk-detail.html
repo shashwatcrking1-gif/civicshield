@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Cascade Risk – ' + ${incident.code})}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('incidents')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-8 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-1">
+                        <a th:href="@{/portal/incidents}" class="hover:text-cyan-400">Incidents</a>
+                        <span>/</span>
+                        <a th:href="@{/portal/incidents/{id}(id=${incident.incidentId})}" class="text-cyan-400 font-bold" th:text="${incident.code}">INC-0001</a>
+                        <span>/</span>
+                        <span class="text-slate-300">Cascade Risk Model</span>
+                    </div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">
+                        Full Cascade Risk Deep-Dive: <span th:text="${incident.location}">Location</span>
+                    </h1>
+                </div>
+
+                <a th:href="@{/portal/incidents/{id}(id=${incident.incidentId})}" 
+                   class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-semibold transition-colors">
+                    ← Back to Incident
+                </a>
+            </div>
+
+            <!-- Cascade Chain Visualizer (HERO) -->
+            <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden bg-gradient-to-r from-[#0E1526] via-[#111A2E] to-[#0E1526]">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-ping"></span>
+                        <h3 class="font-heading font-bold text-lg text-white">Propagated 6-Node Crisis Chain</h3>
+                    </div>
+                    <span class="text-xs font-mono px-3 py-1 rounded bg-slate-900 border border-slate-700 text-cyan-400">
+                        Formula: P(n) = P(n-1) × W + LocalFactor
+                    </span>
+                </div>
+
+                <div th:replace="~{fragments/cascade-chain :: chain(${cascade})}"></div>
+            </div>
+
+            <!-- Detailed Grid: Gauge + Factor Deconstruction + Recommended Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left Column: Gauge & Break Point (5 cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center space-y-4">
+                        <h3 class="font-heading font-bold text-sm text-slate-300 uppercase tracking-wider">Overall Composite Risk Score</h3>
+                        <div th:replace="~{fragments/risk-gauge :: gauge(${cascade.riskScore}, ${cascade.riskLevel})}"></div>
+                        <p class="text-xs text-slate-300 leading-relaxed font-mono p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-left"
+                           th:text="${cascade.explanation}">
+                            Explanation...
+                        </p>
+                    </div>
+
+                    <!-- Break Point Hero Banner -->
+                    <div class="glass-panel p-5 rounded-2xl border border-cyan-800/80 bg-cyan-950/20 space-y-2">
+                        <div class="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase font-mono">
+                            <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                            <span>Recommended Chain Break Point</span>
+                        </div>
+                        <p class="text-xs text-slate-200 leading-relaxed font-semibold" th:text="${cascade.breakPoint}">
+                            Break the chain at Flood: deploy mobile pumps to cut overall score by 22 pts.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Factors & Consequence List (7 cols) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Factors -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">Explainable AI Factor Weights</h3>
+                            <span class="text-xs font-mono text-cyan-400">Sub-surface &amp; Urban Drivers</span>
+                        </div>
+                        <div th:replace="~{fragments/explainability-bars :: factors(${cascade.factors})}"></div>
+                    </div>
+
+                    <!-- Forecasted Consequences -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">Anticipated Impact Sequence</h3>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li th:each="c : ${cascade.consequences}" class="flex items-start gap-2.5 p-2.5 rounded-lg bg-slate-900/50 border border-slate-800">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                                <span th:text="${c}">Consequence detail</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

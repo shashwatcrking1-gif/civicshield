@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="card(title, value, subtitle, icon, colorClass)"
+     class="glass-panel p-5 rounded-2xl relative overflow-hidden group hover:border-cyan-500/40 transition-all">
+    <div class="flex items-center justify-between">
+        <div>
+            <p class="text-xs font-medium uppercase tracking-wider text-slate-400" th:text="${title}">Active Incidents</p>
+            <p class="font-mono text-3xl font-extrabold text-white mt-1 group-hover:text-cyan-400 transition-colors" 
+               th:text="${value}">12</p>
+            <p class="text-xs text-slate-400 mt-1" th:text="${subtitle}">Real-time monitoring</p>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center p-2.5 border"
+             th:classappend="${colorClass ?: 'bg-cyan-950/50 text-cyan-400 border-cyan-800/50'}">
+            <i th:data-lucide="${icon ?: 'activity'}" class="w-6 h-6"></i>
+        </div>
+    </div>
+</div>
+</html>

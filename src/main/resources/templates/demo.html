@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('Live Demo – Interactive What-If Simulator')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div th:replace="~{fragments/section-heading :: heading('INTERACTIVE SANDBOX', 'Public What-If Simulator', 'Adjust city rainfall, traffic congestion, and drainage capacity. See how changes ripple through the cascade chain and discover how to break the chain.')}"></div>
+
+            <!-- Full Simulator Interactive Container -->
+            <div id="public-simulator-container" class="glass-panel p-6 sm:p-10 rounded-3xl border border-slate-700/80 shadow-2xl mt-8">
+                
+                <!-- Controls Row -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 rounded-2xl bg-slate-950/60 border border-slate-800">
+                    
+                    <!-- Zone Profile Selection -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Target Zone Profile</label>
+                        <select data-sim="zone" class="w-full bg-slate-900 border border-slate-700 text-sm text-slate-200 rounded-xl px-3.5 py-2.5 focus:border-cyan-400 focus:outline-none">
+                            <option th:each="z : ${zones}" 
+                                    th:value="${z.name}" 
+                                    th:text="${z.name + ' (Drainage: ' + z.drainage + '%)'}"
+                                    th:selected="${z.name == 'Velachery'}">
+                                Velachery
+                            </option>
+                        </select>
+                        <p class="text-[11px] text-slate-400 mt-1">Pre-calibrated with Chennai baseline topology.</p>
+                    </div>
+
+                    <!-- Rainfall Slider -->
+                    <div>
+                        <div class="flex justify-between items-center text-xs mb-2">
+                            <label class="font-semibold text-slate-300">Rainfall Intensity</label>
+                            <span data-sim-val="rainfall" class="font-mono text-cyan-400 font-bold">90 mm/hr</span>
+                        </div>
+                        <input data-sim="rainfall" type="range" min="0" max="200" value="90" step="5" 
+                               class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                            <span>0 (Dry)</span>
+                            <span>100 (Heavy)</span>
+                            <span>200 (Cloudburst)</span>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Density Slider -->
+                    <div>
+                        <div class="flex justify-between items-center text-xs mb-2">
+                            <label class="font-semibold text-slate-300">Traffic Occupancy</label>
+                            <span data-sim-val="traffic" class="font-mono text-cyan-400 font-bold">75%</span>
+                        </div>
+                        <input data-sim="traffic" type="range" min="0" max="100" value="75" step="5" 
+                               class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                            <span>0% (Free)</span>
+                            <span>50% (Normal)</span>
+                            <span>100% (Gridlock)</span>
+                        </div>
+                    </div>
+
+                    <!-- Drainage Slider -->
+                    <div>
+                        <div class="flex justify-between items-center text-xs mb-2">
+                            <label class="font-semibold text-slate-300">Drainage Capacity</label>
+                            <span data-sim-val="drainage" class="font-mono text-cyan-400 font-bold">40%</span>
+                        </div>
+                        <input data-sim="drainage" type="range" min="0" max="100" value="40" step="5" 
+                               class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                            <span>0% (Choked)</span>
+                            <span>50% (Moderate)</span>
+                            <span>100% (Clear)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Trigger Row -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-2">
+                    <div class="flex items-center gap-3">
+                        <button data-sim="run-btn" type="button" 
+                                class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all">
+                            <i data-lucide="play" class="w-4 h-4"></i>
+                            Run Simulation
+                        </button>
+                        <span class="text-xs text-slate-400 font-mono">Changes apply live on slider release.</span>
+                    </div>
+
+                    <span data-result="engineBadge" class="text-xs px-3 py-1 rounded-full font-mono bg-cyan-950 text-cyan-300 border border-cyan-800/80">
+                        Java CascadeRiskEngine Active
+                    </span>
+                </div>
+
+                <!-- Results Section: Risk Gauge + Cascade Visualizer -->
+                <div class="mt-8 border-t border-slate-800 pt-8 space-y-8">
+                    
+                    <!-- Gauge and Explanation Banner -->
+                    <div class="p-6 rounded-2xl bg-slate-950/70 border border-slate-800 flex flex-col md:flex-row items-center gap-8">
+                        <!-- SVG Risk Gauge -->
+                        <div class="flex-shrink-0">
+                            <div class="relative w-36 h-36 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8" class="text-slate-800/80 fill-none"/>
+                                    <circle data-result="gaugeCircle" cx="50" cy="50" r="42" stroke-width="8" stroke-linecap="round"
+                                            class="gauge-circle fill-none transition-all duration-1000 ease-out"
+                                            stroke="#F97316" stroke-dasharray="263.89" stroke-dashoffset="63.33"/>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                    <span data-result="riskScore" class="font-mono text-3xl font-extrabold text-orange-400">76</span>
+                                    <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400">Risk Score</span>
+                                    <span data-result="riskLevel" class="text-xs font-bold uppercase px-2 py-0.5 rounded-full mt-1 border bg-orange-950/60 text-orange-400 border-orange-800/60">
+                                        HIGH
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- One line explanation + Break Point Recommendation -->
+                        <div class="flex-1 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+                                <h3 class="font-heading font-bold text-white text-base">Forecasted Cascading Impact</h3>
+                            </div>
+                            <p data-result="explanation" class="text-sm text-slate-300 leading-relaxed font-normal">
+                                Loading initial cascade assessment...
+                            </p>
+                            <!-- Break Point Hero Callout -->
+                            <div data-result="breakPoint" class="p-3 rounded-xl bg-cyan-950/50 border border-cyan-800/60 text-xs font-semibold text-cyan-300 flex items-center gap-2">
+                                <i data-lucide="shield-alert" class="w-4 h-4 text-cyan-400 flex-shrink-0"></i>
+                                <span>Evaluating optimal chain break point...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Cascade Chain Visualization -->
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">
+                                Propagated Node Probabilities
+                            </h4>
+                            <span class="text-xs font-mono text-slate-400">Interactive 6-Stage Response Chain</span>
+                        </div>
+                        <div data-result="nodes" class="flex flex-col sm:flex-row items-stretch gap-2 overflow-x-auto py-2">
+                            <!-- Populated via simulator.js -->
+                        </div>
+                    </div>
+
+                    <!-- Factor Contribution Bars & Suggested Actions Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
+                        <!-- Left: Explainable Factors (5 cols) -->
+                        <div class="lg:col-span-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-heading font-bold text-sm text-slate-200">Explainable-AI Factor Weight</h4>
+                                <span class="text-xs font-mono text-slate-400">Risk Drivers</span>
+                            </div>
+                            <div data-result="factors" class="space-y-3">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Right: Recommended Actions (7 cols) -->
+                        <div class="lg:col-span-7 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-heading font-bold text-sm text-slate-200">Action Recommendations to Break The Chain</h4>
+                                <span class="text-xs font-mono text-cyan-400">Prioritized Dispatch</span>
+                            </div>
+                            <div data-result="actions" class="space-y-2.5">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/simulator.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.CivicShieldSimulator) {
+                window.CivicShieldSimulator.init('public-simulator-container', { isPortal: false });
+            }
+        });
+    </script>
+</body>
+</html>

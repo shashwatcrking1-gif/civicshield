@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Reusable Pagination Fragment -->
+<div th:fragment="pagination(pageObj, baseUrl, queryParams)" 
+     th:if="${pageObj.totalPages > 1}" 
+     class="flex items-center justify-between border-t border-slate-800/80 px-4 py-3 sm:px-6 mt-4">
+    <div class="flex flex-1 justify-between sm:hidden">
+        <a th:if="${pageObj.hasPrevious()}" 
+           th:href="@{${baseUrl}(page=${pageObj.number - 1}, q=${queryParams.q}, type=${queryParams.type}, severity=${queryParams.severity}, status=${queryParams.status})}" 
+           class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300">Previous</a>
+        <a th:if="${pageObj.hasNext()}" 
+           th:href="@{${baseUrl}(page=${pageObj.number + 1}, q=${queryParams.q}, type=${queryParams.type}, severity=${queryParams.severity}, status=${queryParams.status})}" 
+           class="ml-3 px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300">Next</a>
+    </div>
+    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+            <p class="text-xs text-slate-400">
+                Showing page <span class="font-mono font-bold text-white" th:text="${pageObj.number + 1}">1</span>
+                of <span class="font-mono font-bold text-white" th:text="${pageObj.totalPages}">5</span>
+                (<span class="font-mono text-cyan-400" th:text="${pageObj.totalElements}">45</span> total incidents)
+            </p>
+        </div>
+        <div>
+            <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm gap-1" aria-label="Pagination">
+                <a th:if="${pageObj.hasPrevious()}" 
+                   th:href="@{${baseUrl}(page=${pageObj.number - 1}, q=${queryParams.q}, type=${queryParams.type}, severity=${queryParams.severity}, status=${queryParams.status})}" 
+                   class="relative inline-flex items-center rounded-lg px-2 py-1 text-slate-400 ring-1 ring-inset ring-slate-700/60 hover:bg-slate-800 hover:text-white">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </a>
+                
+                <span class="inline-flex items-center px-3 py-1 text-xs font-mono font-bold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
+                      th:text="${pageObj.number + 1}">1</span>
+
+                <a th:if="${pageObj.hasNext()}" 
+                   th:href="@{${baseUrl}(page=${pageObj.number + 1}, q=${queryParams.q}, type=${queryParams.type}, severity=${queryParams.severity}, status=${queryParams.status})}" 
+                   class="relative inline-flex items-center rounded-lg px-2 py-1 text-slate-400 ring-1 ring-inset ring-slate-700/60 hover:bg-slate-800 hover:text-white">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+</html>

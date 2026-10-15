@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('What-If Disaster Simulator – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('simulator')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-8 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">Authority What-If Simulator</h1>
+                    <p class="text-xs text-slate-400">Test theoretical monsoon scenarios, toggle interventions, and measure BEFORE vs AFTER risk curves</p>
+                </div>
+            </div>
+
+            <!-- Simulator Master Box -->
+            <div id="portal-sim-box" class="glass-panel p-6 sm:p-10 rounded-3xl border border-slate-700/80 shadow-2xl space-y-8">
+                
+                <!-- Inputs & Interventions Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Sliders (7 cols) -->
+                    <div class="lg:col-span-7 space-y-5 p-6 rounded-2xl bg-slate-950/60 border border-slate-800">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono text-cyan-400 uppercase font-bold tracking-wider">ENVIRONMENTAL INPUTS</span>
+                            
+                            <!-- Zone Select -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-400">Zone:</span>
+                                <select data-sim="zone" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2.5 py-1.5 focus:border-cyan-400">
+                                    <option th:each="z : ${zones}" th:value="${z.name}" th:text="${z.name}" th:selected="${z.name == 'Velachery'}">Velachery</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Rainfall -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5">
+                                <span class="font-semibold text-slate-300">Rainfall Intensity</span>
+                                <span data-sim-val="rainfall" class="font-mono text-cyan-400 font-bold">115 mm/hr</span>
+                            </div>
+                            <input data-sim="rainfall" type="range" min="0" max="200" value="115" step="5" class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Traffic -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5">
+                                <span class="font-semibold text-slate-300">Peak Traffic Congestion</span>
+                                <span data-sim-val="traffic" class="font-mono text-cyan-400 font-bold">82%</span>
+                            </div>
+                            <input data-sim="traffic" type="range" min="0" max="100" value="82" step="5" class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Drainage -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1.5">
+                                <span class="font-semibold text-slate-300">Effective Stormwater Drainage</span>
+                                <span data-sim-val="drainage" class="font-mono text-cyan-400 font-bold">35%</span>
+                            </div>
+                            <input data-sim="drainage" type="range" min="0" max="100" value="35" step="5" class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Intervention Toggles (5 cols) -->
+                    <div class="lg:col-span-5 space-y-4 p-6 rounded-2xl bg-cyan-950/20 border border-cyan-800/50 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-mono text-cyan-400 uppercase font-bold tracking-wider block mb-3">
+                                INTERVENTION CONTROLS ("BREAK THE CHAIN")
+                            </span>
+                            <div class="space-y-3 text-xs">
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 cursor-pointer transition-colors">
+                                    <input data-sim="pumps" type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded bg-slate-800 border-slate-700 focus:ring-0">
+                                    <div>
+                                        <span class="font-bold text-white block">Deploy Mobile Pumping Units</span>
+                                        <span class="text-[11px] text-slate-400 block">+25% drain clearance at flood nodes</span>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 cursor-pointer transition-colors">
+                                    <input data-sim="diversion" type="checkbox" checked class="w-4 h-4 text-cyan-500 rounded bg-slate-800 border-slate-700 focus:ring-0">
+                                    <div>
+                                        <span class="font-bold text-white block">Activate Traffic Diversion Plan</span>
+                                        <span class="text-[11px] text-slate-400 block">Diverts vehicles away from submerged underpasses</span>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 cursor-pointer transition-colors">
+                                    <input data-sim="greenCorridor" type="checkbox" class="w-4 h-4 text-cyan-500 rounded bg-slate-800 border-slate-700 focus:ring-0">
+                                    <div>
+                                        <span class="font-bold text-white block">Open Ambulance Green Corridor</span>
+                                        <span class="text-[11px] text-slate-400 block">Dedicated arterial signal preemption</span>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 cursor-pointer transition-colors">
+                                    <input data-sim="hospitalSurge" type="checkbox" class="w-4 h-4 text-cyan-500 rounded bg-slate-800 border-slate-700 focus:ring-0">
+                                    <div>
+                                        <span class="font-bold text-white block">Trigger Hospital Surge Protocols</span>
+                                        <span class="text-[11px] text-slate-400 block">Pre-mobilize triage and reserve trauma beds</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Save scenario toggle -->
+                        <div class="pt-3 border-t border-cyan-800/40 flex items-center justify-between">
+                            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                                <input data-sim="save" type="checkbox" class="w-4 h-4 rounded text-cyan-500 bg-slate-900 border-slate-700">
+                                <span>Save scenario for audit</span>
+                            </label>
+                            <input data-sim="scenarioName" type="text" placeholder="Scenario name..." 
+                                   class="bg-slate-900 border border-slate-700 text-xs text-slate-100 rounded-lg px-2.5 py-1.5 focus:border-cyan-400 max-w-[160px]"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Simulation Trigger Row -->
+                <div class="flex items-center justify-between pt-2">
+                    <button data-sim="run-btn" type="button" 
+                            class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition-all">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>Recompute BEFORE vs AFTER</span>
+                    </button>
+                    <span class="text-xs font-mono text-cyan-400">Live Spring Boot REST Simulator</span>
+                </div>
+
+                <!-- BEFORE vs AFTER Comparison Card -->
+                <div class="p-6 rounded-2xl bg-slate-950/70 border border-slate-800 grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center">
+                    <div class="space-y-1">
+                        <span class="text-xs font-mono text-slate-400 uppercase">Baseline (No Action)</span>
+                        <div class="font-mono text-4xl font-extrabold text-red-400" data-result="beforeScore">84</div>
+                        <span class="text-xs text-slate-400">Unmitigated Disaster Risk</span>
+                    </div>
+
+                    <div class="space-y-2 p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/40">
+                        <span class="text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider">INTERVENTION IMPACT</span>
+                        <div id="scoreDeltaDisplay" class="font-mono text-2xl font-bold text-emerald-400" data-result="scoreDelta">
+                            −28 pts reduced
+                        </div>
+                        <span class="text-[11px] text-slate-400 block">Chain broken successfully</span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="text-xs font-mono text-cyan-400 uppercase">After Interventions</span>
+                        <div class="font-mono text-4xl font-extrabold text-cyan-400" data-result="afterScore">56</div>
+                        <span class="text-xs text-slate-400">Controlled Impact Level</span>
+                    </div>
+                </div>
+
+                <!-- Risk vs Rainfall Curve Chart -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-white">Risk vs Rainfall Response Curve</h3>
+                            <p class="text-xs text-slate-400">Comparing risk trajectory with and without chain-breaking interventions (0–200 mm/hr)</p>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">Chart.js Response Simulation</span>
+                    </div>
+                    <div class="h-64 w-full relative">
+                        <canvas id="simulatorCurveChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Cascade Chain Component for the Mitigated Outcome -->
+                <div class="space-y-3">
+                    <h4 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">Mitigated Downstream Chain Nodes</h4>
+                    <div data-result="nodes" class="flex flex-col sm:flex-row items-stretch gap-2 overflow-x-auto py-2">
+                        <!-- Populated via simulator.js -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Saved Scenarios Table -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-white">Saved Scenarios Archive</h3>
+                        <p class="text-xs text-slate-400">Historical contingency models run by municipal authorities</p>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-400" th:text="${#lists.size(savedScenarios) + ' saved'}">3 saved</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900/80 text-slate-400 border-b border-slate-800 font-mono uppercase text-[11px]">
+                            <tr>
+                                <th class="py-3 px-4">Scenario</th>
+                                <th class="py-3 px-4">Rainfall</th>
+                                <th class="py-3 px-4">Traffic</th>
+                                <th class="py-3 px-4">Baseline Risk</th>
+                                <th class="py-3 px-4">Result Summary</th>
+                                <th class="py-3 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 font-mono">
+                            <tr th:each="sim : ${savedScenarios}" class="hover:bg-slate-800/40">
+                                <td class="py-3 px-4 font-sans font-bold text-white" th:text="${sim.scenarioName}">Velachery cloudburst</td>
+                                <td class="py-3 px-4 text-cyan-400" th:text="${sim.rainfallLevel + ' mm/hr'}">115 mm/hr</td>
+                                <td class="py-3 px-4 text-slate-300" th:text="${sim.trafficLevel + '%'}">82%</td>
+                                <td class="py-3 px-4 text-red-400 font-bold" th:text="${#numbers.formatDecimal(sim.predictedRisk, 0, 0)}">84</td>
+                                <td class="py-3 px-4 text-slate-300 font-sans max-w-sm truncate" th:text="${sim.result}">Summary</td>
+                                <td class="py-3 px-4 text-right font-sans">
+                                    <form th:action="@{/portal/simulator/{id}/delete(id=${sim.simulationId})}" method="post" class="inline">
+                                        <button type="submit" class="text-xs text-rose-400 hover:text-rose-300 font-semibold">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(savedScenarios)}">
+                                <td colspan="6" class="text-center py-8 text-slate-400 italic font-sans">No saved scenarios yet. Check 'Save scenario' during a simulation run to archive models.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/simulator.js}"></script>
+    <script th:src="@{/js/portal-charts.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.CivicShieldSimulator) {
+                window.CivicShieldSimulator.init('portal-sim-box', { isPortal: true });
+            }
+            if (window.CivicShieldCharts) {
+                window.CivicShieldCharts.initCurveChart('simulatorCurveChart');
+            }
+        });
+    </script>
+</body>
+</html>

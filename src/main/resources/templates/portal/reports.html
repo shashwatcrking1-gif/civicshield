@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Audit Reports & Export – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('reports')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">Incident Audit &amp; Risk Reports</h1>
+                    <p class="text-xs text-slate-400">Generate filtered incident logs and export verified RFC-4180 CSV reports for post-crisis debriefs</p>
+                </div>
+
+                <!-- CSV Export Button -->
+                <a th:href="@{/portal/reports/export(from=${from}, to=${to}, type=${selectedType}, level=${selectedLevel}, q=${q})}" 
+                   class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition-all">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>Export CSV Dataset</span>
+                </a>
+            </div>
+
+            <!-- Filter Toolbar -->
+            <div class="glass-panel p-4 rounded-2xl border border-slate-800">
+                <form th:action="@{/portal/reports}" method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    <!-- Search Code/Location -->
+                    <div>
+                        <label class="block text-[11px] text-slate-400 font-mono mb-1">Search ID or Location</label>
+                        <input type="text" name="q" th:value="${q}" placeholder="e.g. INC-0001, Adyar..."
+                               class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-100 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"/>
+                    </div>
+
+                    <!-- From Date -->
+                    <div>
+                        <label class="block text-[11px] text-slate-400 font-mono mb-1">From Date</label>
+                        <input type="date" name="from" th:value="${from}" 
+                               class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-100 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"/>
+                    </div>
+
+                    <!-- To Date -->
+                    <div>
+                        <label class="block text-[11px] text-slate-400 font-mono mb-1">To Date</label>
+                        <input type="date" name="to" th:value="${to}" 
+                               class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-100 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"/>
+                    </div>
+
+                    <!-- Type Filter -->
+                    <div>
+                        <label class="block text-[11px] text-slate-400 font-mono mb-1">Classification</label>
+                        <select name="type" class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400">
+                            <option value="">All Types</option>
+                            <option th:each="t : ${incidentTypes}" th:value="${t}" th:text="${t.label}" th:selected="${selectedType == t}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Level + Filter Button -->
+                    <div>
+                        <label class="block text-[11px] text-slate-400 font-mono mb-1">Risk Severity</label>
+                        <div class="flex items-center gap-2">
+                            <select name="level" class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400">
+                                <option value="">All Levels</option>
+                                <option th:each="l : ${riskLevels}" th:value="${l}" th:text="${l.label}" th:selected="${selectedLevel == l}"></option>
+                            </select>
+                            <button type="submit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-xs font-semibold rounded-xl">
+                                Apply
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Distribution Summary Cards (Row) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Breakdown by Level -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <span class="text-xs font-mono text-cyan-400 uppercase font-bold tracking-wider">Breakdown by Risk Level</span>
+                    <div class="space-y-1.5 text-xs">
+                        <div th:each="entry : ${countByLevel}" class="flex items-center justify-between">
+                            <span class="text-slate-300" th:text="${entry.key}">Critical</span>
+                            <span class="font-mono font-bold text-white" th:text="${entry.value}">4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breakdown by Status -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <span class="text-xs font-mono text-indigo-400 uppercase font-bold tracking-wider">Breakdown by Status</span>
+                    <div class="space-y-1.5 text-xs">
+                        <div th:each="entry : ${countByStatus}" class="flex items-center justify-between">
+                            <span class="text-slate-300" th:text="${entry.key}">In Progress</span>
+                            <span class="font-mono font-bold text-white" th:text="${entry.value}">6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Count -->
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <span class="text-xs font-mono text-emerald-400 uppercase font-bold tracking-wider">Filtered Dataset Size</span>
+                    <div>
+                        <span class="font-mono text-4xl font-extrabold text-white" th:text="${#lists.size(rows)}">12</span>
+                        <span class="text-xs text-slate-400 block mt-1">Incident records ready for export</span>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-500">RFC-4180 Compliant CSV</span>
+                </div>
+            </div>
+
+            <!-- Table of Filtered Records -->
+            <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900/80 text-slate-400 border-b border-slate-800 font-mono uppercase text-[11px]">
+                            <tr>
+                                <th class="py-3 px-4">Code</th>
+                                <th class="py-3 px-4">Type</th>
+                                <th class="py-3 px-4">Location</th>
+                                <th class="py-3 px-4">Reported</th>
+                                <th class="py-3 px-4">Score</th>
+                                <th class="py-3 px-4">Level</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4">Predicted Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 font-mono">
+                            <tr th:each="row : ${rows}" class="hover:bg-slate-800/40">
+                                <td class="py-3 px-4 font-bold text-cyan-400" th:text="${row.incident.code}">INC-0001</td>
+                                <td class="py-3 px-4 font-sans font-medium text-white" th:text="${row.incident.incidentType.label}">Flood</td>
+                                <td class="py-3 px-4 font-sans text-slate-300 max-w-xs truncate" th:text="${row.incident.location}">Velachery</td>
+                                <td class="py-3 px-4 text-slate-400 text-[11px]" th:text="${#temporals.format(row.incident.reportedDate, 'dd MMM yyyy, HH:mm')}">Time</td>
+                                <td class="py-3 px-4 font-bold text-white">
+                                    <span th:if="${row.analysis}" th:text="${#numbers.formatDecimal(row.analysis.riskScore, 0, 0)}">84</span>
+                                    <span th:unless="${row.analysis}" class="text-slate-500 italic">-</span>
+                                </td>
+                                <td class="py-3 px-4 font-sans">
+                                    <span th:if="${row.analysis}">
+                                        <span th:replace="~{fragments/badges :: riskBadge(${row.analysis.riskLevel})}"></span>
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 font-sans">
+                                    <span th:replace="~{fragments/status-badge :: badge(${row.incident.status})}"></span>
+                                </td>
+                                <td class="py-3 px-4 font-sans text-slate-300 max-w-xs truncate" 
+                                    th:text="${row.analysis != null ? row.analysis.predictedImpact : 'Pending analysis'}">
+                                    Predicted impact...
+                                </td>
+                            </tr>
+
+                            <tr th:if="${#lists.isEmpty(rows)}">
+                                <td colspan="8" class="text-center py-10 font-sans text-slate-400 italic">
+                                    No records match the selected date range or category filters.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

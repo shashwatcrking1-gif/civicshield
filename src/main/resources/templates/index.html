@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('CivicShield – Predict the chain. Break the chain.')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-20">
+        <!-- 1. Hero Section -->
+        <div th:replace="~{fragments/hero :: hero}"></div>
+
+        <!-- 2. Problem Section: "Urban crises are connected" -->
+        <section class="py-20 border-t border-[#1F2A44]/60 bg-[#0E1526]/50 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div th:replace="~{fragments/section-heading :: heading('THE CHALLENGE', 'Urban Crises Are Connected. Response Systems Are Not.', 'Traditional crisis management treats incidents in isolation. When extreme weather hits, delayed correlation triggers catastrophic chain reactions across city infrastructure.')}"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <!-- Card 1 -->
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 hover:border-red-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-red-950/60 border border-red-800/60 text-red-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="layers" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white mb-3 group-hover:text-red-400 transition-colors">Fragmented Data Silos</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Weather radars, traffic sensors, drainage gauges, and emergency hospital registries operate in disconnected silos. Decision-makers rarely see how one affects the other until it is too late.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 hover:border-amber-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-950/60 border border-amber-800/60 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="clock" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white mb-3 group-hover:text-amber-400 transition-colors">Reactive Response Lag</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Emergency departments dispatch rescue teams only after roads are submerged and ambulances are already trapped in gridlock, multiplying travel time by 300%.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-panel p-8 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-950/60 border border-cyan-800/60 text-cyan-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="git-merge" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-white mb-3 group-hover:text-cyan-400 transition-colors">Unforeseen Cascading Effects</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            A single flooded underpass in Velachery cascades into city-wide traffic congestion, delaying emergency cardiac arrivals at Adyar and overloading suburban trauma wards.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Interactive Cascade Strip with Live Probabilities -->
+        <section class="py-20 border-t border-[#1F2A44]/60 bg-[#0B1220]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div th:replace="~{fragments/section-heading :: heading('THE HERO CAPABILITY', 'How The Cascade Propagates', 'CivicShield calculates dynamic dependency weights across consecutive nodes, estimating the probability and severity of secondary disruptions.')}"></div>
+
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 mt-8">
+                    <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider">PROPAGATION PIPELINE</span>
+                            <h3 class="text-lg font-heading font-bold text-white">Full Incident Reaction Chain</h3>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">P(n) = P(n-1) × W + LocalFactor</span>
+                    </div>
+
+                    <!-- Cascade Chain Fragment -->
+                    <div th:replace="~{fragments/cascade-chain :: chain(${heroCascade})}"></div>
+
+                    <!-- Explainable breakdown text -->
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-800/80 text-xs text-slate-400">
+                        <div class="flex items-start gap-2">
+                            <i data-lucide="activity" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                            <span><b>Propagation Formula:</b> Each node uses empirical weights (Rain 0.8 → Flood 0.7 → Road Blockage 0.75 → Traffic 0.6 → Ambulance Delay 0.65 → Hospital Impact 0.55).</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                            <span><b>Actionable Interventions:</b> Introducing mobile pumps or opening green corridors severs dependencies early, dropping the overall risk by up to 45 points.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Features Grid (6 Cards) -->
+        <section class="py-20 border-t border-[#1F2A44]/60 bg-[#0E1526]/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div th:replace="~{fragments/section-heading :: heading('CORE FEATURES', 'Built For Resilience, Speed, and Human-in-the-Loop Vigilance', 'Explore the capabilities designed to keep municipal authorities ahead of cascading city emergencies.')}"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                    <!-- Feature 1 -->
+                    <div th:replace="~{fragments/feature-card :: card('Cascading Risk Engine', 'Propagates crisis probabilities across connected city infrastructure using multi-stage dependency matrices.', 'git-pull-request', 'CORE ENGINE')}"></div>
+
+                    <!-- Feature 2 -->
+                    <div th:replace="~{fragments/feature-card :: card('What-If Simulator', 'Adjust rainfall intensity, traffic levels, and drainage capacity to test intervention strategies before deploying resources.', 'sliders', 'SIMULATOR')}"></div>
+
+                    <!-- Feature 3 -->
+                    <div th:replace="~{fragments/feature-card :: card('Explainable AI &amp; Factors', 'No black boxes. CivicShield breaks down the percentage contribution of rainfall, drainage deficits, and road vulnerabilities.', 'pie-chart', 'EXPLAINABILITY')}"></div>
+
+                    <!-- Feature 4 -->
+                    <div th:replace="~{fragments/feature-card :: card('Smart Multi-Tier Alerts', 'Categorizes alerts into Active, Acknowledged, and Resolved states with automatic priority routing to emergency stakeholders.', 'bell-ring', 'DISPATCH')}"></div>
+
+                    <!-- Feature 5 -->
+                    <div th:replace="~{fragments/feature-card :: card('Human-Veto Recommendations', 'Actionable mitigation cards with Approve or Dismiss controls. Decisions always remain strictly with authorized human personnel.', 'user-check', 'GOVERNANCE')}"></div>
+
+                    <!-- Feature 6 -->
+                    <div th:replace="~{fragments/feature-card :: card('Audited Reports &amp; History', 'Comprehensive incident logs, temporal trend visualizers, and RFC-4180 CSV export for inter-agency post-crisis debriefs.', 'file-spreadsheet', 'ANALYTICS')}"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. How It Works (4-step timeline) -->
+        <section class="py-20 border-t border-[#1F2A44]/60 bg-[#0B1220]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div th:replace="~{fragments/section-heading :: heading('OPERATIONAL WORKFLOW', 'How CivicShield Operates in 4 Steps', 'From real-time sensor ingestion to decisive field action, the platform continuously iterates on emerging threats.')}"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12 relative">
+                    <!-- Step 1 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center relative group">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-800/80 text-cyan-400 font-mono font-bold text-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            01
+                        </div>
+                        <h4 class="font-heading font-bold text-white text-base mb-2">Collect Data</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Ingests rainfall radars (IMD), river gauges, IoT drain sensors, traffic feeds, and hospital registries.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center relative group">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-950/80 border border-indigo-800/80 text-indigo-400 font-mono font-bold text-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            02
+                        </div>
+                        <h4 class="font-heading font-bold text-white text-base mb-2">Analyze Risk</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Maps geo-locations against vulnerability baselines (drainage capacity, historical waterlogging spots).
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center relative group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-800/80 text-amber-400 font-mono font-bold text-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            03
+                        </div>
+                        <h4 class="font-heading font-bold text-white text-base mb-2">Predict Cascade</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Propagates probabilities down the 6-step chain, forecasting downstream gridlock and hospital strain hours ahead.
+                        </p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center relative group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-800/80 text-emerald-400 font-mono font-bold text-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            04
+                        </div>
+                        <h4 class="font-heading font-bold text-white text-base mb-2">Recommend Action</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Suggests the highest-leverage break point (mobile pumps, traffic reroutes, green corridors) for authority approval.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Live Demo Teaser: Mini What-If Widget -->
+        <section id="demo-teaser" class="py-20 border-t border-[#1F2A44]/60 bg-[#0E1526]/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-4">
+                        <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider">INTERACTIVE PREVIEW</span>
+                        <h2 class="font-heading text-3xl font-extrabold text-white tracking-tight">
+                            Test The What-If Simulator Live
+                        </h2>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Move the sliders below to see how heavy rainfall, peak traffic, and compromised drainage cascade through urban nodes in real time.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-300 pt-2">
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                                Real-time Java Cascade Risk Engine endpoint
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                                Immediate updates to probability and risk score
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                                Highlights the optimal chain-breaking intervention
+                            </li>
+                        </ul>
+                        <div class="pt-4">
+                            <a th:href="@{/demo}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-sm transition-all shadow-lg shadow-cyan-500/20">
+                                <span>Launch Full What-If Simulator</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mini Widget Container -->
+                    <div class="lg:col-span-7">
+                        <div id="home-sim-widget" class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-700/80 shadow-2xl space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="sliders" class="w-5 h-5 text-cyan-400"></i>
+                                    <h3 class="font-heading font-bold text-white text-base">Quick Simulator Sandbox</h3>
+                                </div>
+                                <span data-result="engineBadge" class="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-950 text-cyan-400 border border-cyan-800">
+                                    Java Engine Active
+                                </span>
+                            </div>
+
+                            <!-- Sliders Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-medium">Rainfall</span>
+                                        <span data-sim-val="rainfall" class="font-mono text-cyan-400 font-bold">90 mm/hr</span>
+                                    </div>
+                                    <input data-sim="rainfall" type="range" min="0" max="200" value="90" step="5" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-medium">Traffic Density</span>
+                                        <span data-sim-val="traffic" class="font-mono text-cyan-400 font-bold">75%</span>
+                                    </div>
+                                    <input data-sim="traffic" type="range" min="0" max="100" value="75" step="5" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-medium">Drainage Cap.</span>
+                                        <span data-sim-val="drainage" class="font-mono text-cyan-400 font-bold">40%</span>
+                                    </div>
+                                    <input data-sim="drainage" type="range" min="0" max="100" value="40" step="5" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                                </div>
+                            </div>
+
+                            <!-- Target Zone Selector -->
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-slate-400">Zone Profile:</span>
+                                <select data-sim="zone" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-1.5 focus:border-cyan-400 focus:outline-none">
+                                    <option value="Velachery" selected>Velachery (Low-lying basin)</option>
+                                    <option value="Adyar">Adyar (River estuary)</option>
+                                    <option value="T. Nagar">T. Nagar (Commercial density)</option>
+                                    <option value="Guindy">Guindy (Arterial junction)</option>
+                                </select>
+                            </div>
+
+                            <!-- Gauge & Results Strip -->
+                            <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80 flex flex-col sm:flex-row items-center gap-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-center">
+                                        <span data-result="riskScore" class="font-mono text-4xl font-extrabold text-orange-400">76</span>
+                                        <span class="block text-[10px] font-mono text-slate-400 uppercase">RISK SCORE</span>
+                                    </div>
+                                    <span data-result="riskLevel" class="px-2.5 py-1 rounded text-xs font-mono font-bold uppercase bg-orange-950/60 text-orange-400 border border-orange-800/60">
+                                        HIGH
+                                    </span>
+                                </div>
+                                <div class="flex-1 text-xs text-slate-300 leading-relaxed border-t sm:border-t-0 sm:border-l border-slate-800 sm:pl-4">
+                                    <p data-result="explanation">
+                                        Rainfall intensity is the dominant driver. Waterlogging will likely propagate to arterial junctions within 45 minutes.
+                                    </p>
+                                    <div data-result="breakPoint" class="mt-2 text-cyan-400 font-semibold text-[11px] flex items-center gap-1">
+                                        <i data-lucide="shield-alert" class="w-3.5 h-3.5 inline"></i>
+                                        Break the chain at Flood: deploying mobile pumps lowers overall risk by 22 points.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Tech Stack Strip -->
+        <section class="py-16 border-t border-[#1F2A44]/60 bg-[#0B1220]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <span class="text-xs font-mono text-slate-500 uppercase tracking-widest block mb-6">BUILT ON MODERN ENTERPRISE FOUNDATIONS</span>
+                <div class="flex flex-wrap items-center justify-center gap-8 md:gap-14 text-slate-400 font-mono text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-orange-500"></span>
+                        <span class="font-bold text-slate-200">Java 17</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                        <span class="font-bold text-slate-200">Spring Boot 3</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-teal-500"></span>
+                        <span class="font-bold text-slate-200">Thymeleaf SSR</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                        <span class="font-bold text-slate-200">PostgreSQL / H2</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                        <span class="font-bold text-slate-200">Python AI Service (Fallback-safe)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Who It Is For -->
+        <section class="py-20 border-t border-[#1F2A44]/60 bg-[#0E1526]/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div th:replace="~{fragments/section-heading :: heading('STAKEHOLDERS', 'Designed for Integrated Urban Resilience', 'CivicShield brings every department together under a unified operational picture.')}"></div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12 text-center">
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="landmark" class="w-8 h-8 text-cyan-400 mx-auto mb-3"></i>
+                        <h4 class="font-heading font-bold text-white text-sm mb-1">Municipal Corporations</h4>
+                        <p class="text-xs text-slate-400">Greater Chennai Corporation (GCC) drainage and engineering teams.</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="shield-alert" class="w-8 h-8 text-amber-400 mx-auto mb-3"></i>
+                        <h4 class="font-heading font-bold text-white text-sm mb-1">Disaster Management</h4>
+                        <p class="text-xs text-slate-400">State Disaster Management Authority (SDMA) command rooms.</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="ambulance" class="w-8 h-8 text-red-400 mx-auto mb-3"></i>
+                        <h4 class="font-heading font-bold text-white text-sm mb-1">Emergency Services</h4>
+                        <p class="text-xs text-slate-400">108 Ambulance dispatchers and fire &amp; rescue brigades.</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="cross" class="w-8 h-8 text-emerald-400 mx-auto mb-3"></i>
+                        <h4 class="font-heading font-bold text-white text-sm mb-1">Hospitals &amp; Clinics</h4>
+                        <p class="text-xs text-slate-400">Emergency surge staff, ICU bed coordinators, and medical intake.</p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <i data-lucide="plug-zap" class="w-8 h-8 text-indigo-400 mx-auto mb-3"></i>
+                        <h4 class="font-heading font-bold text-white text-sm mb-1">Utility Departments</h4>
+                        <p class="text-xs text-slate-400">TANGEDCO power distribution and Metro Water networks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Impact Stats Band (Simulated figures clearly labeled) -->
+        <section class="py-16 border-t border-[#1F2A44]/60 bg-[#0B1220]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-6">
+                    <span class="text-xs font-mono text-amber-400 bg-amber-950/80 px-3 py-1 rounded-full border border-amber-800/40">
+                        SIMULATED URBAN METRICS · CHENNAI BENCHMARK
+                    </span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="space-y-1">
+                        <div class="font-mono text-4xl sm:text-5xl font-extrabold text-cyan-400" data-counter="45" data-counter-suffix="m">45m</div>
+                        <div class="text-xs text-slate-400 font-medium">Early Warning Lead Time</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="font-mono text-4xl sm:text-5xl font-extrabold text-indigo-400" data-counter="68" data-counter-suffix="%">68%</div>
+                        <div class="text-xs text-slate-400 font-medium">Reduction in Ambulance Delay</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="font-mono text-4xl sm:text-5xl font-extrabold text-emerald-400" data-counter="82" data-counter-suffix="%">82%</div>
+                        <div class="text-xs text-slate-400 font-medium">Cascade Prediction Accuracy</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="font-mono text-4xl sm:text-5xl font-extrabold text-amber-400" data-counter="12" data-counter-prefix="INC-">12</div>
+                        <div class="text-xs text-slate-400 font-medium">Active Monitored Zones</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Call-to-action Section -->
+        <section class="py-20 border-t border-[#1F2A44]/60 bg-gradient-to-b from-[#0E1526] to-[#0B1220] relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+                <div class="w-16 h-16 rounded-2xl bg-cyan-950/80 border border-cyan-800 text-cyan-400 flex items-center justify-center mx-auto mb-2 shadow-xl shadow-cyan-950/50">
+                    <img th:src="@{/favicon.svg}" alt="Logo" class="w-10 h-10"/>
+                </div>
+                <h2 class="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    Ready to break the chain of urban crises?
+                </h2>
+                <p class="text-base text-slate-400 max-w-xl mx-auto">
+                    Experience CivicShield's cascading risk engine in the live public sandbox or sign in to the authority command portal.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a th:href="@{/demo}" class="px-8 py-3.5 rounded-xl font-heading font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-300 hover:from-cyan-300 hover:to-cyan-200 transition-all shadow-lg shadow-cyan-400/20">
+                        Launch Live Demo
+                    </a>
+                    <a th:href="@{/login}" class="px-8 py-3.5 rounded-xl font-heading font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all">
+                        Sign In as Authority
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/simulator.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.CivicShieldSimulator) {
+                window.CivicShieldSimulator.init('home-sim-widget', { isPortal: false });
+            }
+        });
+    </script>
+</body>
+</html>

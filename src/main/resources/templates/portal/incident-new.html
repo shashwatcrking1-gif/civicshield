@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Report New Incident – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('incidents')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full space-y-6 overflow-y-auto">
+            
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">Log Emergency Incident</h1>
+                    <p class="text-xs text-slate-400">Capture geo-coordinates and initial severity. CivicShield will immediately trigger the cascade engine.</p>
+                </div>
+                <a th:href="@{/portal/incidents}" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-semibold transition-colors">
+                    ← Back to List
+                </a>
+            </div>
+
+            <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl">
+                <form th:action="@{/portal/incidents/new}" th:object="${incidentForm}" method="post" class="space-y-6">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Incident Type -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Incident Classification *</label>
+                            <select th:field="*{incidentType}" 
+                                    class="w-full bg-slate-900 border text-sm text-slate-100 rounded-xl px-4 py-2.5 focus:outline-none focus:border-cyan-400"
+                                    th:classappend="${#fields.hasErrors('incidentType')} ? 'border-rose-500' : 'border-slate-700'">
+                                <option th:each="t : ${incidentTypes}" th:value="${t}" th:text="${t.label}">Flood</option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('incidentType')}" th:errors="*{incidentType}" class="text-[11px] text-rose-400 mt-1 font-mono"></p>
+                        </div>
+
+                        <!-- Severity -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Initial Reported Severity *</label>
+                            <select th:field="*{severity}" 
+                                    class="w-full bg-slate-900 border text-sm text-slate-100 rounded-xl px-4 py-2.5 focus:outline-none focus:border-cyan-400"
+                                    th:classappend="${#fields.hasErrors('severity')} ? 'border-rose-500' : 'border-slate-700'">
+                                <option th:each="s : ${severities}" th:value="${s}" th:text="${s.label}">High</option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('severity')}" th:errors="*{severity}" class="text-[11px] text-rose-400 mt-1 font-mono"></p>
+                        </div>
+                    </div>
+
+                    <!-- Location Name -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="block text-xs font-semibold text-slate-300">Location Description *</label>
+                            <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
+                                <span>Quick Zone Presets:</span>
+                                <button type="button" onclick="setPreset('Velachery Main Road, Chennai', 12.9815, 80.2180)" class="text-cyan-400 hover:underline">Velachery</button> ·
+                                <button type="button" onclick="setPreset('Lattice Bridge Road, Adyar, Chennai', 13.0012, 80.2565)" class="text-cyan-400 hover:underline">Adyar</button> ·
+                                <button type="button" onclick="setPreset('Usman Road, T. Nagar, Chennai', 13.0418, 80.2341)" class="text-cyan-400 hover:underline">T. Nagar</button> ·
+                                <button type="button" onclick="setPreset('Kathipara Junction, Guindy, Chennai', 13.0067, 80.2206)" class="text-cyan-400 hover:underline">Guindy</button>
+                            </div>
+                        </div>
+                        <input type="text" id="locationInput" th:field="*{location}" 
+                               placeholder="e.g. Velachery Main Road, near Phoenix Marketcity"
+                               class="w-full bg-slate-900 border text-sm text-slate-100 rounded-xl px-4 py-2.5 focus:outline-none focus:border-cyan-400"
+                               th:classappend="${#fields.hasErrors('location')} ? 'border-rose-500' : 'border-slate-700'"/>
+                        <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-[11px] text-rose-400 mt-1 font-mono"></p>
+                    </div>
+
+                    <!-- Geo-Coordinates & Map Picker -->
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xs font-semibold text-slate-300">Geo-Coordinates (Click on Map to Position)</label>
+                            <span class="text-[11px] font-mono text-cyan-400">Leaflet Point Picker</span>
+                        </div>
+
+                        <!-- Leaflet Interactive Point Picker Map -->
+                        <div id="picker-map" class="h-64 w-full rounded-2xl overflow-hidden border border-slate-700/80 shadow-inner"></div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] text-slate-400 font-mono mb-1">Latitude</label>
+                                <input type="number" step="any" id="latInput" th:field="*{latitude}" 
+                                       class="w-full bg-slate-900 border border-slate-700 text-xs font-mono text-slate-100 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"/>
+                                <p th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}" class="text-[11px] text-rose-400 mt-1 font-mono"></p>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-slate-400 font-mono mb-1">Longitude</label>
+                                <input type="number" step="any" id="lngInput" th:field="*{longitude}" 
+                                       class="w-full bg-slate-900 border border-slate-700 text-xs font-mono text-slate-100 rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"/>
+                                <p th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}" class="text-[11px] text-rose-400 mt-1 font-mono"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-end gap-3">
+                        <a th:href="@{/portal/incidents}" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors">
+                            Cancel
+                        </a>
+                        <button type="submit" 
+                                class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 flex items-center gap-1.5 transition-all">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span>Save &amp; Execute Cascade Risk Engine</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+    <script>
+        let pickerMap, pickerMarker;
+
+        function initPickerMap() {
+            const lat = parseFloat(document.getElementById('latInput').value) || 12.9815;
+            const lng = parseFloat(document.getElementById('lngInput').value) || 80.2180;
+
+            pickerMap = L.map('picker-map').setView([lat, lng], 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; CARTO'
+            }).addTo(pickerMap);
+
+            pickerMarker = L.marker([lat, lng], { draggable: true }).addTo(pickerMap);
+
+            pickerMarker.on('dragend', function (e) {
+                const pos = pickerMarker.getLatLng();
+                document.getElementById('latInput').value = pos.lat.toFixed(6);
+                document.getElementById('lngInput').value = pos.lng.toFixed(6);
+            });
+
+            pickerMap.on('click', function (e) {
+                pickerMarker.setLatLng(e.latlng);
+                document.getElementById('latInput').value = e.latlng.lat.toFixed(6);
+                document.getElementById('lngInput').value = e.latlng.lng.toFixed(6);
+            });
+        }
+
+        function setPreset(location, lat, lng) {
+            document.getElementById('locationInput').value = location;
+            document.getElementById('latInput').value = lat;
+            document.getElementById('lngInput').value = lng;
+            if (pickerMap && pickerMarker) {
+                pickerMarker.setLatLng([lat, lng]);
+                pickerMap.setView([lat, lng], 14);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initPickerMap);
+    </script>
+</body>
+</html>

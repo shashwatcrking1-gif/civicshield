@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:fragment="topbar" class="h-16 border-b border-[#1F2A44] bg-[#111A2E]/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 md:px-8">
+    <div class="flex items-center gap-3">
+        <!-- Mobile Sidebar Toggle -->
+        <button id="sidebar-toggle" class="md:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-xs font-mono text-slate-300 hidden sm:inline">Chennai Cascade Vigilance Active</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/80 text-amber-400 border border-amber-800/40">
+                Simulated data
+            </span>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <!-- Light/Dark Toggle -->
+        <button type="button" data-action="toggle-theme" 
+                class="p-2 rounded-lg border border-slate-700 bg-slate-800/50 text-slate-300 hover:text-white"
+                title="Toggle Theme">
+            <span class="theme-icon-moon text-xs">🌙</span>
+            <span class="theme-icon-sun text-xs hidden">☀️</span>
+        </button>
+
+        <!-- Logged In User Info -->
+        <div sec:authorize="isAuthenticated()" class="flex items-center gap-3 pl-2 border-l border-slate-700/60">
+            <div class="text-right hidden sm:block">
+                <span class="block text-xs font-semibold text-slate-200" sec:authentication="name">User Name</span>
+                <span class="block text-[10px] font-mono text-cyan-400 uppercase" 
+                      sec:authentication="principal.authorities">ROLE</span>
+            </div>
+            
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-xs font-bold text-slate-950">
+                <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+
+            <!-- Logout Form with CSRF -->
+            <form th:action="@{/logout}" method="post" class="inline">
+                <button type="submit" 
+                        class="p-2 text-slate-400 hover:text-rose-400 transition-colors" 
+                        title="Sign Out">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</header>
+</html>

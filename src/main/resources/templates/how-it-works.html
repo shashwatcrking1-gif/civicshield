@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('How It Works – CivicShield Architecture & Data Flow')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div th:replace="~{fragments/section-heading :: heading('ARCHITECTURE &amp; DATA FLOW', 'How CivicShield Anticipates The Cascades', 'A resilient multi-tier system engineered with Java 17 and Spring Boot 3, backed by robust fallback mechanisms.')}"></div>
+
+            <!-- Visual Architecture Diagram Card -->
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 my-12 relative overflow-hidden">
+                <div class="flex items-center justify-between pb-6 border-b border-slate-800 mb-8">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="cpu" class="w-5 h-5 text-cyan-400"></i>
+                        <h3 class="font-heading font-bold text-lg text-white">System Architecture Overview</h3>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-800">
+                        Spring Boot 3 + Python AI Bridge
+                    </span>
+                </div>
+
+                <!-- 3-Tier Architecture Diagram -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                    <!-- Layer 1: Ingestion & Presentation -->
+                    <div class="p-6 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
+                        <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider">TIER 1 · PRESENTATION</span>
+                        <h4 class="font-heading font-bold text-base text-white">Thymeleaf &amp; Leaflet Frontend</h4>
+                        <ul class="text-xs text-slate-400 space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Server-Side Rendered (No heavy SPA bloat)</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Interactive Leaflet Crisis Maps</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Real-time Chart.js Analytics</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Tailwind CSS with Dark/Light Themes</li>
+                        </ul>
+                    </div>
+
+                    <!-- Layer 2: Core Processing -->
+                    <div class="p-6 rounded-2xl bg-cyan-950/20 border border-cyan-800/60 space-y-4 shadow-xl shadow-cyan-950/40">
+                        <span class="text-xs font-mono uppercase text-cyan-400 tracking-wider">TIER 2 · APPLICATION CORE</span>
+                        <h4 class="font-heading font-bold text-base text-white">Spring Boot 3 &amp; Cascade Engine</h4>
+                        <ul class="text-xs text-slate-300 space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> <b>Java CascadeRiskEngine:</b> Deterministic math</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> <b>Spring Security:</b> BCrypt &amp; 4-Role Matrix</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> <b>WebClient AI Bridge:</b> Non-blocking Python calls</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> <b>Automatic Fallback:</b> Zero external downtime</li>
+                        </ul>
+                    </div>
+
+                    <!-- Layer 3: Persistence & AI -->
+                    <div class="p-6 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
+                        <span class="text-xs font-mono uppercase text-indigo-400 tracking-wider">TIER 3 · DATA &amp; AI</span>
+                        <h4 class="font-heading font-bold text-base text-white">PostgreSQL + Python Microservice</h4>
+                        <ul class="text-xs text-slate-400 space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> PostgreSQL (Prod) / H2 In-Memory (Demo)</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> Spring Data JPA with Specifications</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> Optional Deep Learning / Python AI</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-400"></i> Seeded Chennai monsoon dataset</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Scenario Walkthrough: Velachery Cloudburst -->
+            <div class="mt-16">
+                <div class="text-center mb-10">
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest">REALISTIC BENCHMARK SCENARIO</span>
+                    <h3 class="font-heading text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                        Case Study: Monsoon Cloudburst in Velachery, Chennai
+                    </h3>
+                </div>
+
+                <div class="space-y-4 max-w-4xl mx-auto">
+                    <!-- Step 1 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-start gap-4">
+                        <span class="font-mono text-cyan-400 font-bold text-base mt-0.5">01</span>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">T=0m: Cloudburst Detected (115 mm/hr)</h4>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                IMD radar registers sudden heavy precipitation over Velachery basin. CivicShield ingests the signal and calculates a 92% Rain probability.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-start gap-4">
+                        <span class="font-mono text-cyan-400 font-bold text-base mt-0.5">02</span>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">T+15m: Drainage Capacity Exceeded</h4>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                Factoring in the low-lying topography and 35% effective drain clearance, the engine flags an 81% Flood probability with waterlogging on Velachery Main Road.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-start gap-4">
+                        <span class="font-mono text-cyan-400 font-bold text-base mt-0.5">03</span>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">T+30m: Underpass Blockage &amp; Gridlock Forecast</h4>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                Before vehicles arrive at the flooded junction, CivicShield forecasts a 74% Road Blockage and 69% peak traffic spillover to 100 Feet Road.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-start gap-4">
+                        <span class="font-mono text-cyan-400 font-bold text-base mt-0.5">04</span>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">T+45m: Pre-Emptive Ambulance Rerouting</h4>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                108 Emergency dispatch is automatically alerted that ambulances headed for Velachery Govt. Hospital face a 58% delay risk. A green corridor via Inner Ring Road is initiated.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

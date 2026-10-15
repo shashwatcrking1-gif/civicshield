@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('About CivicShield – Vision, Mission & Scope')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-24 pb-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            
+            <div th:replace="~{fragments/section-heading :: heading('MISSION &amp; PURPOSE', 'Predict The Chain. Break The Chain.', 'CivicShield was founded to solve the systemic blindness that paralyzes modern metropolises during extreme climate events.')}"></div>
+
+            <!-- Problem Statement & Vision -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <span class="text-xs font-mono text-rose-400">THE PROBLEM</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Compound Urban Failure</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        When Chennai experienced historic monsoons, the tragedy was not solely the rainfall—it was the subsequent chain of events: clogged stormwater canals caused arterial road flooding, which halted city buses, gridlocked ambulances, and stranded critical patients away from hospitals.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <span class="text-xs font-mono text-cyan-400">OUR VISION</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Anticipatory Urban Resilience</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        To transform cities into self-anticipating organisms where infrastructure disruptions are predicted hours in advance, allowing human authorities to deploy precision interventions that sever the disaster cascade at its weakest link.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Core Objectives -->
+            <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-slate-800 space-y-6">
+                <h3 class="font-heading font-bold text-2xl text-white">Key System Objectives</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-slate-300">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                        <span><b>Bridge Siloed Departments:</b> Unify Greater Chennai Corporation, traffic police, 108 ambulance dispatch, and hospital administration under one shared operational picture.</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                        <span><b>Deterministic Risk Propagation:</b> Compute multi-tier cascade probabilities with complete mathematical transparency instead of unpredictable AI black boxes.</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                        <span><b>Actionable Break Points:</b> Guide field commanders directly to the highest-leverage intervention point to maximize disaster mitigation efficiency.</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                        <span><b>Strict Human Authority Governance:</b> Ensure that artificial intelligence only advises and recommends; execution decisions remain with verified authorities.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Limitations and Future Scope -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <span class="text-xs font-mono text-amber-400">CURRENT SCOPE &amp; LIMITATIONS</span>
+                    <h3 class="font-heading font-bold text-lg text-white">System Assumptions</h3>
+                    <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside leading-relaxed">
+                        <li>The current testbed uses simulated data calibrated to Chennai's topography (Velachery, Adyar, T. Nagar, Guindy).</li>
+                        <li>Sensor latency and network interruptions are simulated via configurable data source health statuses.</li>
+                        <li>Hydraulic flood modeling is approximated via empirical propagation weights.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <span class="text-xs font-mono text-emerald-400">FUTURE HORIZONS</span>
+                    <h3 class="font-heading font-bold text-lg text-white">Roadmap &amp; Evolution</h3>
+                    <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside leading-relaxed">
+                        <li>Direct integration with live SCADA telemetry on Greater Chennai Corporation sluice gates.</li>
+                        <li>Automated SMS and WhatsApp citizen evacuation advisories via government alert gateways.</li>
+                        <li>Expansion of the cascade graph to include electrical sub-station failure and drinking water contamination.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

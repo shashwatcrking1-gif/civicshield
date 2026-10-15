@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('User Management – CivicShield Admin')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('users')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">System User Management</h1>
+                    <p class="text-xs text-slate-400">Admin control panel for municipal accounts, agency role assignments, and credential access</p>
+                </div>
+
+                <a th:href="@{/portal/admin/users/new}" 
+                   class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-cyan-500/20 transition-all">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                    <span>Add New User</span>
+                </a>
+            </div>
+
+            <!-- Users Table -->
+            <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900/80 text-slate-400 border-b border-slate-800 font-mono uppercase text-[11px]">
+                            <tr>
+                                <th class="py-3 px-4">User</th>
+                                <th class="py-3 px-4">Email</th>
+                                <th class="py-3 px-4">Role Clearance</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60">
+                            <tr th:each="user : ${users}" class="hover:bg-slate-800/40">
+                                
+                                <td class="py-3.5 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-cyan-950 border border-cyan-800/60 text-cyan-400 flex items-center justify-center font-mono font-bold text-xs"
+                                             th:text="${user.initials}">
+                                            AM
+                                        </div>
+                                        <span class="font-bold text-white text-sm" th:text="${user.name}">Aarav Menon</span>
+                                    </div>
+                                </td>
+
+                                <td class="py-3.5 px-4 font-mono text-slate-300" th:text="${user.email}">admin@civicshield.in</td>
+
+                                <td class="py-3.5 px-4">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase border"
+                                          th:classappend="${user.role.name() == 'ADMIN'} ? 'bg-red-950/60 text-red-300 border-red-800/60' : (${user.role.name() == 'AUTHORITY'} ? 'bg-cyan-950/60 text-cyan-300 border-cyan-800/60' : (${user.role.name() == 'EMERGENCY_SERVICE'} ? 'bg-amber-950/60 text-amber-300 border-amber-800/60' : 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60'))">
+                                        <span th:text="${user.role.label}">Administrator</span>
+                                    </span>
+                                </td>
+
+                                <td class="py-3.5 px-4">
+                                    <span th:if="${user.enabled}" class="inline-flex items-center gap-1.5 text-emerald-400 font-mono text-xs">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active
+                                    </span>
+                                    <span th:unless="${user.enabled}" class="inline-flex items-center gap-1.5 text-rose-400 font-mono text-xs">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> Disabled
+                                    </span>
+                                </td>
+
+                                <td class="py-3.5 px-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a th:href="@{/portal/admin/users/{id}/edit(id=${user.userId})}" 
+                                           class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-xs font-semibold transition-colors">
+                                            Edit
+                                        </a>
+
+                                        <!-- Toggle Enable/Disable -->
+                                        <form th:action="@{/portal/admin/users/{id}/toggle(id=${user.userId})}" method="post" class="inline">
+                                            <button type="submit" 
+                                                    class="px-3 py-1 rounded-lg text-xs font-semibold border transition-colors"
+                                                    th:classappend="${user.enabled} ? 'bg-rose-950/40 text-rose-300 border-rose-800/40 hover:bg-rose-900/60' : 'bg-emerald-950/40 text-emerald-300 border-emerald-800/40 hover:bg-emerald-900/60'"
+                                                    th:text="${user.enabled ? 'Disable' : 'Enable'}">
+                                                Disable
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

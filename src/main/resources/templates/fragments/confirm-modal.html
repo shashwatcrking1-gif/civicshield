@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Generic Confirmation Modal Backdrop -->
+<div th:fragment="modal(modalId, title, message, formAction, buttonText)" 
+     th:id="${modalId}" 
+     class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel max-w-md w-full p-6 rounded-2xl border border-slate-700 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+        <div class="flex items-center gap-3 text-rose-400 mb-3">
+            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            <h3 class="font-heading font-bold text-lg text-white" th:text="${title}">Confirm Action</h3>
+        </div>
+        <p class="text-sm text-slate-300 mb-6 leading-relaxed" th:text="${message}">Are you sure you want to proceed?</p>
+        <div class="flex items-center justify-end gap-3">
+            <button type="button" 
+                    th:onclick="|document.getElementById('${modalId}').classList.add('hidden')|"
+                    class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300">
+                Cancel
+            </button>
+            <form th:action="${formAction}" method="post" class="inline">
+                <button type="submit" 
+                        class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30">
+                    <span th:text="${buttonText ?: 'Confirm'}">Confirm</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

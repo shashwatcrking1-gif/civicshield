@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="empty(icon, title, message)" 
+     class="glass-panel p-12 text-center rounded-2xl border border-slate-800/80 my-6">
+    <div class="w-16 h-16 rounded-2xl bg-slate-800/60 border border-slate-700/60 text-slate-400 flex items-center justify-center mx-auto mb-4">
+        <i th:data-lucide="${icon ?: 'inbox'}" class="w-8 h-8"></i>
+    </div>
+    <h3 class="font-heading font-semibold text-lg text-white mb-1" th:text="${title}">No records found</h3>
+    <p class="text-sm text-slate-400 max-w-sm mx-auto" th:text="${message}">There are currently no items matching this criteria.</p>
+</div>
+</html>

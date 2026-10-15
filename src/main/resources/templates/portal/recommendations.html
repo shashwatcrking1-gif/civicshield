@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Intervention Recommendations – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('recommendations')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">AI Intervention Recommendations</h1>
+                    <p class="text-xs text-slate-400">Targeted actions formulated by the cascade risk engine to break disaster chains</p>
+                </div>
+            </div>
+
+            <!-- Mandatory Human Authority Note -->
+            <div class="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-800/60 text-xs text-cyan-200 flex items-start gap-3">
+                <i data-lucide="shield-check" class="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5"></i>
+                <div class="space-y-1">
+                    <span class="font-bold text-white block">Strict Human-in-the-Loop Governance Notice:</span>
+                    <p class="leading-relaxed">
+                        CivicShield suggests and models the impact of interventions, but does not deploy field resources autonomously. 
+                        Every recommendation requires explicit human confirmation (<span class="text-emerald-400 font-semibold">Approve</span>) or rejection (<span class="text-slate-400 font-semibold">Dismiss</span>) by an authorized control room operator.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tabs: Pending / Approved / Dismissed -->
+            <div class="border-b border-slate-800 flex items-center gap-6 text-sm font-medium">
+                <a th:href="@{/portal/recommendations(status='PENDING')}"
+                   th:classappend="${currentStatus.name() == 'PENDING'} ? 'text-cyan-400 border-b-2 border-cyan-400 pb-3' : 'text-slate-400 hover:text-white pb-3'"
+                   class="flex items-center gap-2 transition-colors">
+                    <span>Pending Review (<span th:text="${counts[T(com.civicshield.model.RecommendationStatus).PENDING]}">6</span>)</span>
+                </a>
+                <a th:href="@{/portal/recommendations(status='APPROVED')}"
+                   th:classappend="${currentStatus.name() == 'APPROVED'} ? 'text-cyan-400 border-b-2 border-cyan-400 pb-3' : 'text-slate-400 hover:text-white pb-3'"
+                   class="flex items-center gap-2 transition-colors">
+                    <span>Approved &amp; Dispatched (<span th:text="${counts[T(com.civicshield.model.RecommendationStatus).APPROVED]}">12</span>)</span>
+                </a>
+                <a th:href="@{/portal/recommendations(status='DISMISSED')}"
+                   th:classappend="${currentStatus.name() == 'DISMISSED'} ? 'text-cyan-400 border-b-2 border-cyan-400 pb-3' : 'text-slate-400 hover:text-white pb-3'"
+                   class="flex items-center gap-2 transition-colors">
+                    <span>Dismissed (<span th:text="${counts[T(com.civicshield.model.RecommendationStatus).DISMISSED]}">3</span>)</span>
+                </a>
+            </div>
+
+            <!-- List -->
+            <div class="space-y-4">
+                <div th:each="rec : ${recommendations}">
+                    <div th:replace="~{fragments/recommendation-card :: card(${rec}, ${currentStatus.name()})}"></div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(recommendations)}">
+                    <div th:replace="~{fragments/empty-state :: empty('check-circle', 'No Recommendations Found', 'There are no action recommendations currently under this filter.')}"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

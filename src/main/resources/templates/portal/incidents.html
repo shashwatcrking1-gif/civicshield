@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout-portal :: head('Incidents & Cascading Threats – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('incidents')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto">
+            
+            <!-- Header Row -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">Incidents &amp; Cascading Threats</h1>
+                    <p class="text-xs text-slate-400">Searchable repository of reported events, geo-coordinates, and cascade scores</p>
+                </div>
+                <div sec:authorize="hasAnyRole('ADMIN', 'AUTHORITY')">
+                    <a th:href="@{/portal/incidents/new}" 
+                       class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-cyan-500/20 transition-all">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Report Incident</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Filter & Search Bar -->
+            <div class="glass-panel p-4 rounded-2xl border border-slate-800">
+                <form th:action="@{/portal/incidents}" method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    
+                    <!-- Search Query -->
+                    <div class="lg:col-span-2 relative">
+                        <input type="text" name="q" th:value="${q}" 
+                               placeholder="Search location or code (e.g. Velachery, INC-0001)..."
+                               class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-100 rounded-xl px-4 py-2.5 focus:outline-none focus:border-cyan-400 transition-colors"/>
+                    </div>
+
+                    <!-- Type Filter -->
+                    <div>
+                        <select name="type" class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-cyan-400">
+                            <option value="">All Incident Types</option>
+                            <option th:each="t : ${incidentTypes}" th:value="${t}" th:text="${t.label}" th:selected="${selectedType == t}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Severity Filter -->
+                    <div>
+                        <select name="severity" class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-cyan-400">
+                            <option value="">All Severities</option>
+                            <option th:each="s : ${severities}" th:value="${s}" th:text="${s.label}" th:selected="${selectedSeverity == s}"></option>
+                        </select>
+                    </div>
+
+                    <!-- Status Filter + Submit -->
+                    <div class="flex items-center gap-2">
+                        <select name="status" class="w-full bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-cyan-400">
+                            <option value="">All Statuses</option>
+                            <option th:each="st : ${statuses}" th:value="${st}" th:text="${st.label}" th:selected="${selectedStatus == st}"></option>
+                        </select>
+                        <button type="submit" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-xs font-semibold">
+                            Filter
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Incidents Table -->
+            <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900/80 text-slate-400 border-b border-slate-800 font-mono uppercase tracking-wider text-[11px]">
+                            <tr>
+                                <th class="py-3 px-4">Code</th>
+                                <th class="py-3 px-4">Type</th>
+                                <th class="py-3 px-4">Location</th>
+                                <th class="py-3 px-4">Severity</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4">Cascade Score</th>
+                                <th class="py-3 px-4">Reported</th>
+                                <th class="py-3 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60">
+                            <tr th:each="incident : ${incidentPage.content}" 
+                                class="hover:bg-slate-800/40 transition-colors">
+                                
+                                <td class="py-3 px-4 font-mono font-bold text-cyan-400" th:text="${incident.code}">INC-0001</td>
+                                
+                                <td class="py-3 px-4">
+                                    <div class="flex items-center gap-1.5 font-medium text-white">
+                                        <i th:data-lucide="${incident.incidentType.icon}" class="w-3.5 h-3.5 text-cyan-400"></i>
+                                        <span th:text="${incident.incidentType.label}">Heavy Rain</span>
+                                    </div>
+                                </td>
+
+                                <td class="py-3 px-4 text-slate-300 max-w-xs truncate" th:text="${incident.location}">Velachery</td>
+
+                                <td class="py-3 px-4">
+                                    <span th:replace="~{fragments/badges :: riskBadge(${incident.severity})}"></span>
+                                </td>
+
+                                <td class="py-3 px-4">
+                                    <span th:replace="~{fragments/status-badge :: badge(${incident.status})}"></span>
+                                </td>
+
+                                <!-- Cascade Score from Latest Analysis -->
+                                <td class="py-3 px-4 font-mono">
+                                    <th:block th:if="${latestAnalyses[incident.incidentId]}">
+                                        <span class="font-bold text-sm" 
+                                              th:style="|color: ${latestAnalyses[incident.incidentId].riskLevel.color};|"
+                                              th:text="${#numbers.formatDecimal(latestAnalyses[incident.incidentId].riskScore, 0, 0)}">
+                                            78
+                                        </span>
+                                        <span class="text-[10px] text-slate-400 uppercase" 
+                                              th:text="${'(' + latestAnalyses[incident.incidentId].riskLevel.label + ')'}">
+                                            (High)
+                                        </span>
+                                    </th:block>
+                                    <span th:unless="${latestAnalyses[incident.incidentId]}" class="text-slate-500 italic">Pending</span>
+                                </td>
+
+                                <td class="py-3 px-4 text-slate-400 font-mono text-[11px]" 
+                                    th:text="${#temporals.format(incident.reportedDate, 'dd MMM, HH:mm')}">
+                                    15 Oct, 14:30
+                                </td>
+
+                                <td class="py-3 px-4 text-right">
+                                    <a th:href="@{/portal/incidents/{id}(id=${incident.incidentId})}" 
+                                       class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 border border-slate-700 hover:border-cyan-500/40 font-semibold transition-colors">
+                                        Details →
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr th:if="${incidentPage.empty}">
+                                <td colspan="8" class="text-center py-12 text-slate-400 italic">
+                                    No incidents match the active search or filter criteria.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Fragment -->
+                <div th:replace="~{fragments/pagination :: pagination(${incidentPage}, '/portal/incidents', ${queryParams})}"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

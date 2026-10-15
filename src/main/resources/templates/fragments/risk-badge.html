@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<span th:fragment="badge(level)" 
+      class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase border"
+      th:classappend="${level.css == 'critical'} ? 'bg-red-950/60 text-red-400 border-red-800/60' : (${level.css == 'high'} ? 'bg-orange-950/60 text-orange-400 border-orange-800/60' : (${level.css == 'medium'} ? 'bg-amber-950/60 text-amber-400 border-amber-800/60' : 'bg-emerald-950/60 text-emerald-400 border-emerald-800/60'))">
+    <span class="w-1.5 h-1.5 rounded-full" 
+          th:classappend="${level.css == 'critical'} ? 'bg-red-400 animate-pulse' : (${level.css == 'high'} ? 'bg-orange-400' : (${level.css == 'medium'} ? 'bg-amber-400' : 'bg-emerald-400'))"></span>
+    <span th:text="${level.label}">Critical</span>
+</span>
+</html>

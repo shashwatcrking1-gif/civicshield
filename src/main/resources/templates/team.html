@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('Team & Contributors – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div th:replace="~{fragments/section-heading :: heading('THE ARCHITECTS', 'Engineering Urban Resilience', 'Meet the multidisciplinary minds bringing predictive intelligence to municipal emergency command rooms.')}"></div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+                <!-- Team Member 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center space-y-4 group hover:border-cyan-500/40 transition-all">
+                    <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-0.5 mx-auto">
+                        <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-cyan-400 font-mono font-bold text-2xl">
+                            SS
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-lg text-white group-hover:text-cyan-400 transition-colors">Shaswat Sinha</h4>
+                        <p class="text-xs text-cyan-400 font-mono">Lead Systems Architect</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Spearheading Java 17 backend design, cascade risk mathematical engines, and enterprise Spring Boot integration.
+                    </p>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center space-y-4 group hover:border-cyan-500/40 transition-all">
+                    <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 p-0.5 mx-auto">
+                        <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-indigo-400 font-mono font-bold text-2xl">
+                            AR
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-lg text-white group-hover:text-cyan-400 transition-colors">Ananya Rao</h4>
+                        <p class="text-xs text-indigo-400 font-mono">Urban Hydrology &amp; GIS Specialist</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Calibrating Chennai basin drainage metrics, stormwater canal thresholds, and geographical risk overlays.
+                    </p>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center space-y-4 group hover:border-cyan-500/40 transition-all">
+                    <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-purple-500 to-rose-600 p-0.5 mx-auto">
+                        <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-purple-400 font-mono font-bold text-2xl">
+                            VK
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-lg text-white group-hover:text-cyan-400 transition-colors">Vikram Kulkarni</h4>
+                        <p class="text-xs text-purple-400 font-mono">AI &amp; Predictive Modeling Lead</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Designing the Python AI fallback microservice, dependency probability matrices, and explainability factors.
+                    </p>
+                </div>
+
+                <!-- Team Member 4 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center space-y-4 group hover:border-cyan-500/40 transition-all">
+                    <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 p-0.5 mx-auto">
+                        <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-teal-400 font-mono font-bold text-2xl">
+                            DN
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-lg text-white group-hover:text-cyan-400 transition-colors">Dr. Deepa Nair</h4>
+                        <p class="text-xs text-teal-400 font-mono">Emergency Medicine &amp; Triage Advisor</p>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Modeling 108 ambulance response delay vectors, trauma ward surges, and hospital emergency protocol readiness.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Join / Contributor Banner -->
+            <div class="glass-panel p-8 rounded-3xl border border-slate-800 text-center max-w-3xl mx-auto mt-16 space-y-4">
+                <h3 class="font-heading font-bold text-xl text-white">Collaborate with the CivicShield Initiative</h3>
+                <p class="text-xs text-slate-400 max-w-xl mx-auto leading-relaxed">
+                    We welcome civil engineers, emergency responders, data scientists, and municipal planners interested in testing predictive cascading models in other metropolitan areas.
+                </p>
+                <a th:href="@{/contact}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 font-semibold text-xs border border-slate-700 transition-colors">
+                    <span>Contact the Research Team</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

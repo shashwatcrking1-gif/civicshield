@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+  Explainable-AI Factor Contribution Bars
+-->
+<div th:fragment="factors(factors)" class="space-y-3 w-full">
+    <div th:each="factor : ${factors}" class="p-3 rounded-xl bg-slate-900/40 border border-slate-800/80 space-y-1.5">
+        <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold text-slate-200" th:text="${factor.name}">Rainfall intensity</span>
+            <span class="font-mono font-bold text-cyan-400" th:text="${factor.contribution + '% weight'}">35% weight</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700/60">
+            <div class="bg-gradient-to-r from-cyan-400 to-indigo-500 h-2 rounded-full transition-all duration-700" 
+                 th:style="|width: ${factor.contribution}%;|"></div>
+        </div>
+        <div class="flex justify-between items-center text-[11px] text-slate-400">
+            <span th:text="${factor.description}">Description text</span>
+            <span class="font-mono text-slate-500" th:text="${'Input: ' + factor.value + '/100'}">Input: 85/100</span>
+        </div>
+    </div>
+</div>
+</html>

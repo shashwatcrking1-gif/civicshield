@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="hero" class="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-28">
+    <!-- Ambient Radial Glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-cyan-500/15 via-indigo-500/10 to-rose-500/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center space-y-6 max-w-4xl mx-auto">
+            
+            <!-- Live Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-800/50 text-cyan-300 text-xs font-mono backdrop-blur-md shadow-lg shadow-cyan-950/40">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                AI-Powered Urban Crisis Prediction &amp; Cascading Impact Shield
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
+                Predict the chain. <br/>
+                <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                    Break the chain.
+                </span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+                CivicShield does not just detect a crisis. It models the cascading chain reaction before it strikes—forecasting flood propagation, traffic gridlock, and emergency delays so authorities can intervene early.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <a th:href="@{/demo}" 
+                   class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-heading font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-300 hover:from-cyan-300 hover:to-cyan-200 transition-all shadow-lg shadow-cyan-400/25 flex items-center justify-center gap-2 group">
+                    <span>Try Live What-If Demo</span>
+                    <i data-lucide="play" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                </a>
+                <a th:href="@{/login}" 
+                   class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-heading font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
+                    <span>Authority Login</span>
+                </a>
+            </div>
+
+            <!-- Simulated data note -->
+            <p class="text-xs font-mono text-slate-500 pt-1">
+                Active testbed: Greater Chennai Metropolitan Region (Velachery, Adyar, T. Nagar, Guindy)
+            </p>
+        </div>
+
+        <!-- Animated Hero Cascade Graphic (Interactive Node Chain with Pulse effect) -->
+        <div class="mt-14 max-w-5xl mx-auto glass-panel p-6 sm:p-8 rounded-3xl border border-slate-700/60 shadow-2xl relative overflow-hidden bg-gradient-to-b from-slate-900/90 to-slate-950/90">
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-6">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-3 h-3 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span class="font-heading font-bold text-sm sm:text-base text-slate-200">
+                        Real-Time Cascade Threat Simulation: Velachery Monsoonal Inundation
+                    </span>
+                </div>
+                <span class="font-mono text-xs px-2.5 py-1 rounded-full bg-red-950/80 text-red-400 border border-red-800/60 font-semibold">
+                    Simulated Critical Chain
+                </span>
+            </div>
+
+            <!-- Cascade Chain Component -->
+            <div th:replace="~{fragments/cascade-chain :: chain(${heroCascade})}"></div>
+
+            <!-- Bottom Break Point Banner -->
+            <div class="mt-6 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs gap-3">
+                <div class="flex items-center gap-2 text-cyan-300">
+                    <i data-lucide="shield-alert" class="w-4 h-4 text-cyan-400 flex-shrink-0"></i>
+                    <span class="font-medium">
+                        Recommended Break Point: Deploy mobile de-watering pumps at Velachery 100-ft road to cut downstream flood propagation by 38%.
+                    </span>
+                </div>
+                <a th:href="@{/demo}" class="text-cyan-400 hover:text-cyan-300 font-mono font-semibold flex items-center gap-1 flex-shrink-0 underline">
+                    Simulate Interventions →
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

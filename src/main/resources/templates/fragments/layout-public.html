@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title != null ? title + ' – CivicShield' : 'CivicShield – Predict the chain. Break the chain.'}">CivicShield</title>
+    <meta name="description" content="CivicShield is an AI-powered urban crisis prediction and response vigilance shield. It forecasts cascading disasters and recommends action before they happen.">
+    
+    <!-- Open Graph SEO -->
+    <meta property="og:title" th:content="${title != null ? title + ' – CivicShield' : 'CivicShield – Predict the chain. Break the chain.'}">
+    <meta property="og:description" content="Predict the chain. Break the chain. Urban crisis prediction and cascading impact response shield.">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        shield: {
+                            bg: '#0B1220',
+                            surface: '#111A2E',
+                            surfaceHover: '#17233E',
+                            border: '#1F2A44',
+                            borderSubtle: '#162035',
+                            teal: '#22D3EE',
+                            tealHover: '#06B6D4',
+                            indigo: '#6366F1',
+                            indigoHover: '#4F46E5',
+                        },
+                        risk: {
+                            low: '#22C55E',
+                            medium: '#F59E0B',
+                            high: '#F97316',
+                            critical: '#EF4444'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Design System Styles -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200">
+    
+    <!-- Navbar Fragment -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Main Content Injection -->
+    <main class="flex-grow pt-20">
+        <th:block th:replace="${content}"></th:block>
+    </main>
+
+    <!-- Footer Fragment -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- Core Scripts -->
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

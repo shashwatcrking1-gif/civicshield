@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+  CivicShield CASCADE CHAIN VISUALIZER (The Core Hero Feature)
+  Renders the 6-step propagation chain:
+  Rain → Flood → Road Blockage → Traffic → Ambulance Delay → Hospital Impact
+-->
+<div th:fragment="chain(cascade)" class="cascade-container w-full">
+    <div class="flex items-center justify-between gap-2 overflow-x-auto py-4 px-2 min-w-[700px]">
+        <th:block th:each="node, iter : ${cascade.nodes}">
+            <!-- Node Card -->
+            <div class="cascade-node flex-1 min-w-[130px] p-3 rounded-xl border bg-slate-900/60 backdrop-blur-md transition-all duration-300"
+                 th:classappend="${node.probability >= 75} ? 'pulse-critical border-red-500/80' : (${node.probability >= 55} ? 'border-orange-500/60' : (${node.probability >= 35} ? 'border-amber-500/50' : 'border-emerald-500/40'))"
+                 th:style="|border-top-width: 3px; border-top-color: ${node.level.color};|">
+                
+                <!-- Node Icon & Title -->
+                <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400" th:text="${'0' + (iter.index + 1)}">01</span>
+                    <i th:data-lucide="${node.icon}" class="w-4 h-4 text-slate-300"></i>
+                </div>
+
+                <div class="font-heading font-semibold text-xs text-slate-200 truncate" th:text="${node.label}">
+                    Node Label
+                </div>
+
+                <!-- Probability Display -->
+                <div class="flex items-baseline gap-1 my-1.5">
+                    <span class="font-mono font-bold text-2xl tracking-tight" 
+                          th:style="|color: ${node.level.color};|"
+                          th:text="${node.probability + '%'}">
+                        81%
+                    </span>
+                    <span class="text-[10px] uppercase font-mono px-1 rounded text-slate-400" 
+                          th:text="${node.level.label}">High</span>
+                </div>
+
+                <!-- Mini progress bar -->
+                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                    <div class="h-1.5 rounded-full transition-all duration-500" 
+                         th:style="|width: ${node.probability}%; background-color: ${node.level.color};|">
+                    </div>
+                </div>
+
+                <!-- Brief consequence snippet -->
+                <p class="text-[10px] text-slate-400 mt-2 line-clamp-2 leading-tight" th:text="${node.consequence}">
+                    Consequence preview...
+                </p>
+            </div>
+
+            <!-- Animated Flow Connector (omitted after the final node) -->
+            <div th:if="${!iter.last}" class="flex flex-col items-center justify-center px-1 text-slate-500 flex-shrink-0">
+                <svg class="w-5 h-5 text-cyan-400/70 cascade-flow-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </div>
+        </th:block>
+    </div>
+</div>
+</html>

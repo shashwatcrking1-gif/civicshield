@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<footer th:fragment="footer" class="border-t border-[#1F2A44] bg-[#0E1526] text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+            <!-- Brand Column -->
+            <div class="space-y-4 md:col-span-1">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/favicon.svg}" alt="CivicShield" class="w-8 h-8"/>
+                    <span class="font-heading font-bold text-lg text-white">CivicShield</span>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Civic Intelligence &amp; Crisis Vigilance Shield. Predicting urban cascading disasters and empowering municipal authorities to break the chain.
+                </p>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-950/50 border border-emerald-800/40 text-emerald-400 text-[11px] font-mono">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Simulated Chennai Vigilance Engine Active
+                </div>
+            </div>
+
+            <!-- Quick Navigation -->
+            <div>
+                <h4 class="text-sm font-heading font-semibold text-slate-200 uppercase tracking-wider mb-3">Platform</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a th:href="@{/features}" class="hover:text-cyan-400 transition-colors">Cascading Risk Engine</a></li>
+                    <li><a th:href="@{/how-it-works}" class="hover:text-cyan-400 transition-colors">How It Works</a></li>
+                    <li><a th:href="@{/demo}" class="hover:text-cyan-400 transition-colors">Interactive What-If Simulator</a></li>
+                    <li><a th:href="@{/technology}" class="hover:text-cyan-400 transition-colors">Tech Architecture</a></li>
+                </ul>
+            </div>
+
+            <!-- Authority Links -->
+            <div>
+                <h4 class="text-sm font-heading font-semibold text-slate-200 uppercase tracking-wider mb-3">Stakeholders</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a th:href="@{/login}" class="hover:text-cyan-400 transition-colors">Greater Chennai Corporation (GCC)</a></li>
+                    <li><a th:href="@{/login}" class="hover:text-cyan-400 transition-colors">State Disaster Management (SDMA)</a></li>
+                    <li><a th:href="@{/login}" class="hover:text-cyan-400 transition-colors">108 Emergency Ambulance Network</a></li>
+                    <li><a th:href="@{/login}" class="hover:text-cyan-400 transition-colors">Govt. Medical College &amp; Hospitals</a></li>
+                </ul>
+            </div>
+
+            <!-- Organization & Info -->
+            <div>
+                <h4 class="text-sm font-heading font-semibold text-slate-200 uppercase tracking-wider mb-3">Project</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a th:href="@{/about}" class="hover:text-cyan-400 transition-colors">Vision &amp; Problem Statement</a></li>
+                    <li><a th:href="@{/team}" class="hover:text-cyan-400 transition-colors">Project Team</a></li>
+                    <li><a th:href="@{/contact}" class="hover:text-cyan-400 transition-colors">Contact &amp; Feedback</a></li>
+                    <li><span class="text-slate-500 font-mono">Stack: Java 17 · Spring Boot 3</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+            <p>© 2026 CivicShield. Built with Java 17 &amp; Spring Boot 3. All Chennai scenarios contain simulated demonstration data.</p>
+            <div class="flex items-center gap-6 font-mono text-[11px]">
+                <span class="text-cyan-400">"Predict the chain. Break the chain."</span>
+                <a th:href="@{/login}" class="text-slate-400 hover:text-slate-200">Authority Access →</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

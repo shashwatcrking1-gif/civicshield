@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Dashboard – CivicShield Command')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-8 overflow-y-auto">
+            
+            <!-- Welcome Header -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl sm:text-3xl text-white">Metropolitan Vigilance Dashboard</h1>
+                    <p class="text-xs text-slate-400 mt-1">Real-time crisis monitoring &amp; cascading vulnerability tracking for Greater Chennai</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a th:href="@{/portal/incidents/new}" 
+                       class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-cyan-500/20 transition-all">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Report Incident</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- KPI Cards Grid (4 Cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- KPI 1 -->
+                <div th:replace="~{fragments/stat-card :: card('Active Incidents', ${stats.activeIncidents}, 'Live in-field events', 'alert-triangle', 'bg-cyan-950/50 text-cyan-400 border-cyan-800/50')}"></div>
+                <!-- KPI 2 -->
+                <div th:replace="~{fragments/stat-card :: card('High-Risk Zones', ${stats.highRiskZones}, 'Velachery, Adyar basins', 'map-pin', 'bg-red-950/50 text-red-400 border-red-800/50')}"></div>
+                <!-- KPI 3 -->
+                <div th:replace="~{fragments/stat-card :: card('Critical Alerts', ${stats.criticalAlerts}, 'Immediate action required', 'bell-ring', 'bg-orange-950/50 text-orange-400 border-orange-800/50')}"></div>
+                <!-- KPI 4 -->
+                <div th:replace="~{fragments/stat-card :: card('Simulations Run', ${stats.simulationsRun}, 'Saved What-If models', 'sliders', 'bg-indigo-950/50 text-indigo-400 border-indigo-800/50')}"></div>
+            </div>
+
+            <!-- Top Cascading Threat Card (HERO ELEMENT) -->
+            <div th:if="${stats.topThreatIncidentId}" 
+                 class="glass-panel p-6 sm:p-8 rounded-3xl border border-red-800/60 shadow-2xl relative overflow-hidden bg-gradient-to-r from-red-950/20 via-slate-900/80 to-slate-900/90">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80 mb-6">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-red-500 animate-ping"></span>
+                        <div>
+                            <span class="text-[10px] font-mono text-red-400 uppercase font-bold tracking-wider">HIGHEST CASCADING THREAT</span>
+                            <h3 class="font-heading font-bold text-lg text-white" 
+                                th:text="${stats.topThreatType + ' at ' + stats.topThreatLocation}">
+                                Flood at Velachery Main Road
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-xs px-2.5 py-1 rounded bg-red-950/90 text-red-300 border border-red-700/80 font-bold"
+                              th:text="${'Score: ' + stats.topThreatScore + ' (' + stats.topThreatLevel.label + ')'}">
+                            Score: 84 (Critical)
+                        </span>
+                        <a th:href="@{/portal/incidents/{id}(id=${stats.topThreatIncidentId})}" 
+                           class="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold text-xs transition-colors flex items-center gap-1">
+                            <span>Inspect Chain</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 6-Node Chain Graphic for Top Threat -->
+                <div class="cascade-container w-full overflow-x-auto py-2">
+                    <div class="flex items-center gap-2 min-w-[700px]">
+                        <th:block th:each="node, iter : ${stats.topThreatNodes}">
+                            <div class="flex-1 p-3 rounded-xl border bg-slate-950/70"
+                                 th:classappend="${node.probability >= 75} ? 'pulse-critical border-red-500/80' : (${node.probability >= 55} ? 'border-orange-500/60' : 'border-slate-800')"
+                                 th:style="|border-top-width: 3px; border-top-color: ${node.level.color};|">
+                                <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider" th:text="${node.label}">Node</div>
+                                <div class="font-mono font-bold text-xl my-1" th:style="|color: ${node.level.color};|" th:text="${node.probability + '%'}">81%</div>
+                                <div class="w-full bg-slate-800 rounded-full h-1 overflow-hidden">
+                                    <div class="h-1 rounded-full" th:style="|width: ${node.probability}%; background-color: ${node.level.color};|"></div>
+                                </div>
+                            </div>
+                            <span th:if="${!iter.last}" class="text-slate-600 text-xs">→</span>
+                        </th:block>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-300 mt-4 leading-relaxed font-mono" th:text="${stats.topThreatExplanation}">
+                    Explanation text...
+                </p>
+            </div>
+
+            <!-- Charts & Mini Map Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Incidents Trend Chart (7 cols) -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-white">Incidents &amp; High-Risk Trend</h3>
+                            <p class="text-xs text-slate-400">14-day history of reported events vs critical cascades</p>
+                        </div>
+                        <span class="text-xs font-mono text-cyan-400">Past 14 Days</span>
+                    </div>
+                    <div class="h-64 w-full relative">
+                        <canvas id="dashboardTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Risk Distribution Donut (5 cols) -->
+                <div class="lg:col-span-5 glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-white">Risk Distribution</h3>
+                            <p class="text-xs text-slate-400">Active incidents by risk severity level</p>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400" th:text="${stats.totalIncidents + ' total'}">12 total</span>
+                    </div>
+                    <div class="h-64 w-full relative flex items-center justify-center">
+                        <canvas id="dashboardDonutChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mini Map & Recent Alerts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Mini Crisis Map (7 cols) -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-white">Live Incident Map Preview</h3>
+                            <p class="text-xs text-slate-400">Chennai Metropolitan Area geo-coordinates</p>
+                        </div>
+                        <a th:href="@{/portal/map}" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold underline flex items-center gap-1">
+                            <span>Open Full Map</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                    <!-- Mini Map Container -->
+                    <div id="mini-dashboard-map" class="h-72 w-full rounded-xl overflow-hidden border border-slate-800"></div>
+                </div>
+
+                <!-- Recent Alerts List (5 cols) -->
+                <div class="lg:col-span-5 glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-white">Recent Active Alerts</h3>
+                            <p class="text-xs text-slate-400">Awaiting control room response</p>
+                        </div>
+                        <a th:href="@{/portal/alerts}" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold underline">
+                            View All →
+                        </a>
+                    </div>
+
+                    <div class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                        <div th:each="alert : ${recentAlerts}" class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span th:replace="~{fragments/priority-badge :: badge(${alert.priority})}"></span>
+                                <span class="text-[10px] font-mono text-slate-500" th:text="${#temporals.format(alert.alertDate, 'HH:mm')}">Time</span>
+                            </div>
+                            <p class="text-xs text-slate-200 line-clamp-2" th:text="${alert.message}">Alert message...</p>
+                            <div class="flex items-center justify-between text-[11px] pt-1">
+                                <a th:href="@{/portal/incidents/{id}(id=${alert.riskAnalysis.incident.incidentId})}" 
+                                   class="text-cyan-400 font-mono underline" th:text="${alert.riskAnalysis.incident.code}">INC-0001</a>
+                                <form th:action="@{/portal/alerts/{id}/acknowledge(id=${alert.alertId})}" method="post" class="inline">
+                                    <input type="hidden" name="redirectStatus" value="ACTIVE">
+                                    <button type="submit" class="text-xs text-amber-400 hover:text-amber-300 font-semibold">Acknowledge</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(recentAlerts)}" class="text-center py-8 text-xs text-slate-400">
+                            No active alerts at this time. All clear.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/portal-map.js}"></script>
+    <script th:src="@{/js/portal-charts.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function () {
+            // Trend line chart
+            if (window.CivicShieldCharts) {
+                window.CivicShieldCharts.initTrendChart('dashboardTrendChart');
+                
+                // Donut chart with server distribution
+                const distData = /*[[${stats.riskDistribution}]]*/ {};
+                window.CivicShieldCharts.initDonutChart('dashboardDonutChart', distData);
+            }
+
+            // Mini Leaflet Map
+            if (window.CivicShieldMap) {
+                window.CivicShieldMap.init('mini-dashboard-map', {
+                    lat: 13.0150,
+                    lng: 80.2300,
+                    zoom: 11,
+                    static: false
+                });
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

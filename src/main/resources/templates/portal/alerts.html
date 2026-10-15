@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Alerts Center – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('alerts')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">Alerts Dispatch Center</h1>
+                    <p class="text-xs text-slate-400">Prioritized crisis notices generated from cascading risk analyses</p>
+                </div>
+            </div>
+
+            <!-- Tabs: Active / Acknowledged / Resolved -->
+            <div class="border-b border-slate-800 flex items-center gap-6 text-sm font-medium">
+                <a th:href="@{/portal/alerts(status='ACTIVE')}"
+                   th:classappend="${currentStatus.name() == 'ACTIVE'} ? 'text-cyan-400 border-b-2 border-cyan-400 pb-3' : 'text-slate-400 hover:text-white pb-3'"
+                   class="flex items-center gap-2 transition-colors">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-ping" th:if="${counts[T(com.civicshield.model.AlertStatus).ACTIVE] > 0}"></span>
+                    <span>Active (<span th:text="${counts[T(com.civicshield.model.AlertStatus).ACTIVE]}">4</span>)</span>
+                </a>
+                <a th:href="@{/portal/alerts(status='ACKNOWLEDGED')}"
+                   th:classappend="${currentStatus.name() == 'ACKNOWLEDGED'} ? 'text-cyan-400 border-b-2 border-cyan-400 pb-3' : 'text-slate-400 hover:text-white pb-3'"
+                   class="flex items-center gap-2 transition-colors">
+                    <span>Acknowledged (<span th:text="${counts[T(com.civicshield.model.AlertStatus).ACKNOWLEDGED]}">2</span>)</span>
+                </a>
+                <a th:href="@{/portal/alerts(status='RESOLVED')}"
+                   th:classappend="${currentStatus.name() == 'RESOLVED'} ? 'text-cyan-400 border-b-2 border-cyan-400 pb-3' : 'text-slate-400 hover:text-white pb-3'"
+                   class="flex items-center gap-2 transition-colors">
+                    <span>Resolved (<span th:text="${counts[T(com.civicshield.model.AlertStatus).RESOLVED]}">8</span>)</span>
+                </a>
+            </div>
+
+            <!-- Alerts List -->
+            <div class="space-y-4">
+                <div th:each="alert : ${alerts}">
+                    <div th:replace="~{fragments/alert-card :: card(${alert}, ${currentStatus.name()})}"></div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(alerts)}">
+                    <div th:replace="~{fragments/empty-state :: empty('bell-off', 'No Alerts Found', 'There are no alerts matching this status category.')}"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+  Radial SVG Risk Gauge for 0-100 score
+-->
+<div th:fragment="gauge(score, level)" class="flex flex-col items-center justify-center p-4">
+    <div class="relative w-36 h-36 flex items-center justify-center">
+        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+            <!-- Background circle track -->
+            <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8" 
+                    class="text-slate-800/80 fill-none"/>
+            <!-- Animated progress circle -->
+            <circle cx="50" cy="50" r="42" stroke-width="8" stroke-linecap="round"
+                    class="gauge-circle fill-none transition-all duration-1000 ease-out"
+                    th:style="|stroke: ${level.color}; stroke-dasharray: 263.89; stroke-dashoffset: ${263.89 - (score / 100.0) * 263.89};|"/>
+        </svg>
+
+        <!-- Center Score & Label -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span class="font-mono text-3xl font-extrabold tracking-tight" 
+                  th:style="|color: ${level.color};|" 
+                  th:text="${score}">78</span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400">Score / 100</span>
+            <span class="text-xs font-bold uppercase px-2 py-0.5 rounded-full mt-1 border"
+                  th:style="|background-color: ${level.color}22; color: ${level.color}; border-color: ${level.color}44;|"
+                  th:text="${level.label}">Critical</span>
+        </div>
+    </div>
+</div>
+</html>

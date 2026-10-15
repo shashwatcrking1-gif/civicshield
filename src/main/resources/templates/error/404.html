@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('404 Page Not Found – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex items-center justify-center p-6 text-center">
+    <div class="glass-panel max-w-lg w-full p-10 rounded-3xl border border-slate-800 space-y-6">
+        <div class="w-16 h-16 rounded-2xl bg-cyan-950/60 border border-cyan-800/80 text-cyan-400 flex items-center justify-center mx-auto">
+            <i data-lucide="compass" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-2">
+            <span class="font-mono text-xs uppercase px-2.5 py-1 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 font-bold">
+                HTTP 404 · MISSING NODE
+            </span>
+            <h1 class="font-heading text-3xl font-extrabold text-white">Resource Not Found</h1>
+            <p class="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto" th:text="${message ?: 'The requested URL, incident record, or analysis could not be located in the system.'}">
+                The requested URL or incident record could not be found.
+            </p>
+        </div>
+        <div class="flex items-center justify-center gap-3 pt-2">
+            <a th:href="@{/}" class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-colors">
+                Back to Public Home
+            </a>
+            <a th:href="@{/portal/dashboard}" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors">
+                Portal Dashboard
+            </a>
+        </div>
+    </div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

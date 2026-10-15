@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="flash" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <!-- Success Alert -->
+    <div th:if="${successMessage}" 
+         class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-800/80 text-emerald-200 text-sm flex items-center justify-between mb-4 shadow-lg shadow-emerald-950/30">
+        <div class="flex items-center gap-3">
+            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
+            <span th:text="${successMessage}">Operation completed successfully.</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-emerald-400 hover:text-emerald-200">
+            <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+    </div>
+
+    <!-- Error Alert -->
+    <div th:if="${errorMessage}" 
+         class="p-4 rounded-xl bg-rose-950/60 border border-rose-800/80 text-rose-200 text-sm flex items-center justify-between mb-4 shadow-lg shadow-rose-950/30">
+        <div class="flex items-center gap-3">
+            <i data-lucide="alert-circle" class="w-5 h-5 text-rose-400 flex-shrink-0"></i>
+            <span th:text="${errorMessage}">An error occurred. Please check your inputs.</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-200">
+            <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+    </div>
+</div>
+</html>

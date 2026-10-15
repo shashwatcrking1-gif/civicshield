@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Data Feeds & Integrations – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('data-sources')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">External Data Sources &amp; Telemetry</h1>
+                    <p class="text-xs text-slate-400">Monitoring health statuses of weather radars, IoT drainage sensors, traffic feeds, and hospital registries</p>
+                </div>
+            </div>
+
+            <!-- Health Summary Strip -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-emerald-400 font-bold">ONLINE FEEDS</span>
+                        <div class="font-mono text-3xl font-bold text-white mt-1" th:text="${counts[T(com.civicshield.model.DataStatus).ONLINE]}">5</div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Real-time telemetry stream active</p>
+                    </div>
+                    <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-amber-400 font-bold">DELAYED FEEDS</span>
+                        <div class="font-mono text-3xl font-bold text-white mt-1" th:text="${counts[T(com.civicshield.model.DataStatus).DELAYED]}">2</div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Intermittent sensor latency (>10m)</p>
+                    </div>
+                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-rose-400 font-bold">OFFLINE FEEDS</span>
+                        <div class="font-mono text-3xl font-bold text-white mt-1" th:text="${counts[T(com.civicshield.model.DataStatus).OFFLINE]}">1</div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Failing over to historical baseline</p>
+                    </div>
+                    <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                </div>
+            </div>
+
+            <!-- Data Sources Table -->
+            <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900/80 text-slate-400 border-b border-slate-800 font-mono uppercase text-[11px]">
+                            <tr>
+                                <th class="py-3 px-4">Data Source Name</th>
+                                <th class="py-3 px-4">Category / Protocol</th>
+                                <th class="py-3 px-4">Coverage Zone</th>
+                                <th class="py-3 px-4">Health Status</th>
+                                <th class="py-3 px-4 text-right">Simulate Health State</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60">
+                            <tr th:each="source : ${sources}" class="hover:bg-slate-800/40">
+                                <td class="py-3.5 px-4 font-bold text-white">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="radio" class="w-4 h-4 text-cyan-400"></i>
+                                        <span th:text="${source.sourceName}">IMD Radar</span>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 px-4 font-mono text-cyan-300" th:text="${source.sourceType}">Weather API</td>
+                                <td class="py-3.5 px-4 text-slate-300" th:text="${source.location}">Chennai Regional</td>
+                                <td class="py-3.5 px-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase border"
+                                          th:classappend="${source.dataStatus.name() == 'ONLINE'} ? 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60' : (${source.dataStatus.name() == 'DELAYED'} ? 'bg-amber-950/60 text-amber-300 border-amber-800/60' : 'bg-rose-950/60 text-rose-300 border-rose-800/60')">
+                                        <span class="w-1.5 h-1.5 rounded-full" 
+                                              th:classappend="${source.dataStatus.name() == 'ONLINE'} ? 'bg-emerald-400 animate-pulse' : (${source.dataStatus.name() == 'DELAYED'} ? 'bg-amber-400' : 'bg-rose-400')"></span>
+                                        <span th:text="${source.dataStatus.label}">Online</span>
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 text-right">
+                                    <!-- Status changer form for simulation -->
+                                    <form th:action="@{/portal/data-sources/{id}/status(id=${source.sourceId})}" method="post" class="inline-flex items-center gap-1.5">
+                                        <select name="status" class="bg-slate-900 border border-slate-700 text-[11px] text-slate-200 rounded-lg px-2 py-1 focus:border-cyan-400">
+                                            <option th:each="st : ${statuses}" th:value="${st}" th:text="${st.label}" th:selected="${st == source.dataStatus}"></option>
+                                        </select>
+                                        <button type="submit" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 text-[11px] font-semibold rounded-lg">
+                                            Set
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

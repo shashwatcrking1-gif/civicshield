@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('Features – CivicShield Crisis Vigilance Platform')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div th:replace="~{fragments/section-heading :: heading('PLATFORM CAPABILITIES', 'Engineered to Intercept Cascading Catastrophes', 'CivicShield turns reactive disaster management into a proactive science. Dive deep into the 6 foundational features of the platform.')}"></div>
+
+            <!-- Detailed Features List -->
+            <div class="space-y-16 mt-16">
+                
+                <!-- Feature 1: Cascading Risk Engine -->
+                <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-950/80 text-cyan-400 border border-cyan-800">01 · CORE ALGORITHM</span>
+                        <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white">Dynamic Multi-Stage Cascading Risk Engine</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Traditional disaster alert systems stop at predicting rain or flood depth. CivicShield connects weather inputs directly to the civic infrastructure chain:
+                        </p>
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 font-mono text-xs text-cyan-300">
+                            Rain (0.80) → Flood (0.70) → Road Blockage (0.75) → Traffic (0.60) → Ambulance Delay (0.65) → Hospital Impact (0.55)
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Each node computes an individual risk score combining probability, severity weight, and localized exposure, combined using an inverse survival dampening model.
+                        </p>
+                    </div>
+                    <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-950/60 border border-slate-800 text-center space-y-3">
+                        <div class="w-16 h-16 rounded-2xl bg-cyan-950/80 text-cyan-400 flex items-center justify-center mx-auto">
+                            <i data-lucide="git-merge" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-base text-white">Deterministic &amp; Reproducible</h4>
+                        <p class="text-xs text-slate-400">Written natively in pure Java 17 for microsecond latency and 100% deterministic outputs.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 2: What-If Simulator -->
+                <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 order-2 lg:order-1 p-6 rounded-2xl bg-slate-950/60 border border-slate-800 text-center space-y-3">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-950/80 text-indigo-400 flex items-center justify-center mx-auto">
+                            <i data-lucide="sliders" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-base text-white">Pre-Emptive Testing</h4>
+                        <p class="text-xs text-slate-400">Test resource deployments in software before dispatching physical assets into the storm.</p>
+                    </div>
+                    <div class="lg:col-span-7 order-1 lg:order-2 space-y-4">
+                        <span class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-950/80 text-indigo-400 border border-indigo-800">02 · PROACTIVE SIMULATION</span>
+                        <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white">What-If Disaster Simulation Sandbox</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Authorities can test theoretical meteorological scenarios before they manifest. Adjust rainfall, peak hour traffic congestion, and compromised storm-water drainage.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-indigo-400"></i>
+                                <span>Immediate Before vs After comparison curves</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-indigo-400"></i>
+                                <span>Save custom city scenarios to simulate monsoon contingency plans</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature 3: Explainable AI -->
+                <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="text-xs font-mono px-3 py-1 rounded-full bg-amber-950/80 text-amber-400 border border-amber-800">03 · TRANSPARENCY</span>
+                        <h3 class="font-heading text-2xl sm:text-3xl font-bold text-white">Explainable AI &amp; Factor Decomposition</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            High stakes public safety decisions cannot be trusted to opaque neural networks. CivicShield isolates exactly which variables are driving overall crisis probability.
+                        </p>
+                        <div class="space-y-2 pt-2">
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Drainage Deficit (Velachery Basin)</span>
+                                <span class="font-mono text-cyan-400 font-bold">38% contribution</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-cyan-400 h-2 rounded-full" style="width: 38%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-950/60 border border-slate-800 text-center space-y-3">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-950/80 text-amber-400 flex items-center justify-center mx-auto">
+                            <i data-lucide="help-circle" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-base text-white">Clear Rationale</h4>
+                        <p class="text-xs text-slate-400">Generated explanations clarify why risk levels shifted and which agency needs to act.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 4, 5, 6 summary cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6">
+                    <div th:replace="~{fragments/feature-card :: card('Multi-Role Crisis Map', 'Interactive Leaflet map showing active incidents, risk heatzones, and animated pulse circles.', 'map', 'GEO-SPATIAL')}"></div>
+                    <div th:replace="~{fragments/feature-card :: card('Human Authority Veto', 'Every automated intervention recommendation requires approval by an authorized control room operator.', 'user-check', 'ETHICS &amp; GOVERNANCE')}"></div>
+                    <div th:replace="~{fragments/feature-card :: card('Multi-Role Portal Access', 'Strict RBAC separating municipal engineers, 108 ambulance dispatch, hospital triage, and system admins.', 'shield-check', 'SECURITY')}"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

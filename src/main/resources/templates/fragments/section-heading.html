@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="heading(badge, title, subtitle)" class="text-center max-w-3xl mx-auto mb-12">
+    <span th:if="${badge}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-950/80 text-cyan-400 border border-cyan-800/50 mb-3"
+          th:text="${badge}">
+        BADGE
+    </span>
+    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight" th:text="${title}">
+        Section Title
+    </h2>
+    <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed" th:text="${subtitle}">
+        Section subtitle explaining key details.
+    </p>
+</div>
+</html>

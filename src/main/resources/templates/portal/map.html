@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-portal :: head('Crisis Map – Leaflet Geo-Spatial Vigilance')}"></head>
+<body class="bg-[#0B1220] text-slate-100 min-h-screen flex">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('map')}"></div>
+
+    <div class="flex-1 flex flex-col min-w-0 md:pl-64">
+        <div th:replace="~{fragments/topbar :: topbar}"></div>
+        <div th:replace="~{fragments/flash-messages :: flash}"></div>
+
+        <main class="flex-1 p-4 md:p-8 flex flex-col space-y-4">
+            
+            <!-- Map Header & Filter Toolbar -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-heading font-extrabold text-2xl text-white">Metropolitan Crisis Map</h1>
+                    <p class="text-xs text-slate-400">Pulsing risk markers and vulnerability zones across Greater Chennai</p>
+                </div>
+
+                <!-- Risk Filters -->
+                <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono">
+                    <button type="button" data-map-filter="ALL" class="px-3 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-500 text-cyan-300 font-bold">
+                        All Incidents
+                    </button>
+                    <button type="button" data-map-filter="CRITICAL" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-red-400 transition-colors">
+                        Critical
+                    </button>
+                    <button type="button" data-map-filter="HIGH" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-orange-400 transition-colors">
+                        High
+                    </button>
+                    <button type="button" data-map-filter="MEDIUM" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-amber-400 transition-colors">
+                        Medium
+                    </button>
+                    <button type="button" data-map-filter="LOW" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-emerald-400 transition-colors">
+                        Low
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Map Frame + Summary Drawer -->
+            <div class="relative flex-1 min-h-[550px] rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+                <!-- Leaflet Map Container -->
+                <div id="crisis-leaflet-map" class="w-full h-full min-h-[550px]"></div>
+
+                <!-- Floating Legend -->
+                <div class="absolute bottom-6 left-6 z-[1000] p-3.5 rounded-2xl glass-panel border border-slate-700/80 text-xs font-mono space-y-2 shadow-2xl backdrop-blur-md">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">Risk Legend</span>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                        <span class="text-red-400 font-bold">Critical (Score 75–100)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
+                        <span class="text-orange-400 font-bold">High (55–74)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        <span class="text-amber-400 font-bold">Medium (35–54)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <span class="text-emerald-400 font-bold">Low (0–34)</span>
+                    </div>
+                </div>
+
+                <!-- Click Summary Drawer (Bottom/Right Slide-over) -->
+                <div id="map-summary-drawer" class="hidden absolute top-6 right-6 bottom-6 z-[1000] w-80 sm:w-96 glass-panel p-6 rounded-2xl border border-slate-700/80 shadow-2xl flex flex-col justify-between overflow-y-auto backdrop-blur-md animate-in slide-in-from-right duration-200">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span id="drawer-code" class="font-mono text-sm font-bold text-cyan-400">INC-0001</span>
+                            <button onclick="document.getElementById('map-summary-drawer').classList.add('hidden')" 
+                                    class="text-slate-400 hover:text-white p-1">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <span id="drawer-level" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase">CRITICAL</span>
+                            <h3 id="drawer-title" class="font-heading font-bold text-lg text-white mt-1">Incident Type</h3>
+                            <p id="drawer-location" class="text-xs text-slate-300 mt-1 leading-relaxed">Location text</p>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                            <span class="text-[10px] font-mono text-slate-400 uppercase">Forecasted Cascade</span>
+                            <p id="drawer-chain" class="font-mono text-xs text-cyan-300 font-semibold leading-tight">Rain → Flood → Road</p>
+                            <p id="drawer-explanation" class="text-xs text-slate-400 leading-snug">Explanation</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <span id="drawer-status" class="text-xs text-slate-400 font-mono">In Progress</span>
+                        <a id="drawer-link" href="#" class="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-colors flex items-center gap-1">
+                            <span>Inspect Incident</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/portal-map.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function () {
+            // Setup Drawer Controller
+            window.CivicShieldMapDrawer = {
+                open: function (item) {
+                    const drawer = document.getElementById('map-summary-drawer');
+                    if (!drawer) return;
+                    document.getElementById('drawer-code').innerText = item.code;
+                    document.getElementById('drawer-title').innerText = item.type;
+                    document.getElementById('drawer-location').innerText = item.location;
+                    document.getElementById('drawer-chain').innerText = item.chainSummary;
+                    document.getElementById('drawer-explanation').innerText = item.explanation;
+                    document.getElementById('drawer-status').innerText = item.status;
+                    document.getElementById('drawer-link').setAttribute('href', '/portal/incidents/' + item.incidentId);
+                    
+                    const lvl = document.getElementById('drawer-level');
+                    lvl.innerText = item.riskLevel + ' (' + item.riskScore + ')';
+                    lvl.style.color = item.riskColor;
+                    lvl.style.backgroundColor = item.riskColor + '22';
+                    lvl.style.borderColor = item.riskColor + '55';
+
+                    drawer.classList.remove('hidden');
+                    if (window.lucide) window.lucide.createIcons();
+                }
+            };
+
+            // Initialize Map with zones data
+            const zones = /*[[${zones}]]*/ [];
+            if (window.CivicShieldMap) {
+                window.CivicShieldMap.init('crisis-leaflet-map', {
+                    lat: 13.0150,
+                    lng: 80.2300,
+                    zoom: 12,
+                    zones: zones
+                });
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

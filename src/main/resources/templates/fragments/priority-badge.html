@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<span th:fragment="badge(priority)"
+      class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border"
+      th:classappend="${priority.css == 'critical'} ? 'bg-red-950/70 text-red-300 border-red-700/60' : (${priority.css == 'high'} ? 'bg-orange-950/70 text-orange-300 border-orange-700/60' : (${priority.css == 'medium'} ? 'bg-amber-950/70 text-amber-300 border-amber-700/60' : 'bg-emerald-950/70 text-emerald-300 border-emerald-700/60'))">
+    <span th:text="${priority.label}">High</span>
+</span>
+</html>

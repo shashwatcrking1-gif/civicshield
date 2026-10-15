@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout-public :: head('Technology Architecture – CivicShield')}"></head>
+<body class="bg-[#0B1220] text-slate-100 flex flex-col min-h-screen">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-grow pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div th:replace="~{fragments/section-heading :: heading('ENTERPRISE STACK', 'Engineered for High Reliability &amp; Crisis Survivability', 'CivicShield intentionally rejects fragile single-page app paradigms in favor of a robust, secure, and resilient Java-first architecture.')}"></div>
+
+            <!-- Tech Details Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                
+                <!-- Card 1: Java 17 & Spring Boot 3 -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-orange-950/60 border border-orange-800/60 text-orange-400 flex items-center justify-center">
+                        <i data-lucide="coffee" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-mono text-orange-400">CORE BACKEND</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Java 17 &amp; Spring Boot 3</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Strong typing, memory safety, and battle-tested multithreading. Implements layered architecture (Controller → Service → Repository) with constructor injection and bean validation.
+                    </p>
+                </div>
+
+                <!-- Card 2: Thymeleaf Server-Side Rendering -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-teal-950/60 border border-teal-800/60 text-teal-400 flex items-center justify-center">
+                        <i data-lucide="layout" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-mono text-teal-400">SERVER RENDERING</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Spring MVC + Thymeleaf</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Zero client-side bundle load failures during catastrophic mobile connectivity drops. Reusable fragments for modular, clean, and accessible UI rendering.
+                    </p>
+                </div>
+
+                <!-- Card 3: Spring Security 6 & BCrypt -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-950/60 border border-indigo-800/60 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="lock" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-mono text-indigo-400">DEFENSE IN DEPTH</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Spring Security &amp; RBAC</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Granular URL authorization with CSRF protection, BCrypt password hashing, and role checks (<code class="text-indigo-300">ADMIN</code>, <code class="text-indigo-300">AUTHORITY</code>, <code class="text-indigo-300">EMERGENCY_SERVICE</code>, <code class="text-indigo-300">HOSPITAL</code>).
+                    </p>
+                </div>
+
+                <!-- Card 4: CascadeRiskEngine (Pure Java) -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-950/60 border border-cyan-800/60 text-cyan-400 flex items-center justify-center">
+                        <i data-lucide="git-branch" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-mono text-cyan-400">CORE ALGORITHM</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Built-in Cascade Engine</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Propagates crisis weights down the 6-node chain with sub-millisecond calculation speeds. Operates unconditionally without external dependencies.
+                    </p>
+                </div>
+
+                <!-- Card 5: Python AI Fallback Bridge -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-purple-950/60 border border-purple-800/60 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-mono text-purple-400">AI INTEROP</span>
+                    <h3 class="font-heading font-bold text-xl text-white">WebClient Python AI Bridge</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Optionally talks to Python deep learning services over reactive WebClient. If the AI service times out or is offline, it seamlessly falls back to the Java engine.
+                    </p>
+                </div>
+
+                <!-- Card 6: Dual DB (PostgreSQL + H2 Demo) -->
+                <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-blue-950/60 border border-blue-800/60 text-blue-400 flex items-center justify-center">
+                        <i data-lucide="database" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-xs font-mono text-blue-400">DATA PERSISTENCE</span>
+                    <h3 class="font-heading font-bold text-xl text-white">Dual-Profile JPA Persistence</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Spring Data JPA with Hibernate. The <code class="text-blue-300">demo</code> profile runs entirely in-memory using H2 with automated Chennai seed data; <code class="text-blue-300">prod</code> connects to PostgreSQL/PostGIS.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Reliability Guarantee Strip -->
+            <div class="glass-panel p-8 rounded-3xl border border-emerald-900/50 bg-emerald-950/20 mt-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-900/40 border border-emerald-700/60 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-bold text-white text-base">Zero-Failure Resiliency Architecture</h4>
+                        <p class="text-xs text-slate-300 mt-0.5">Even during server power disruptions, the built-in deterministic cascade engine ensures emergency prediction services continue functioning.</p>
+                    </div>
+                </div>
+                <a th:href="@{/demo}" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex-shrink-0 transition-colors">
+                    Test Engine Resiliency →
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

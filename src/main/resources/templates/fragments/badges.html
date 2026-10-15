@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+  Shared badges: Risk Level, Status, Priority, Stat Card, Section Heading
+-->
+<span th:fragment="riskBadge(level)" 
+      class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-bold uppercase border"
+      th:classappend="${level.css == 'critical'} ? 'bg-red-950/60 text-red-400 border-red-800/60' : (${level.css == 'high'} ? 'bg-orange-950/60 text-orange-400 border-orange-800/60' : (${level.css == 'medium'} ? 'bg-amber-950/60 text-amber-400 border-amber-800/60' : 'bg-emerald-950/60 text-emerald-400 border-emerald-800/60'))">
+    <span class="w-1.5 h-1.5 rounded-full" 
+          th:classappend="${level.css == 'critical'} ? 'bg-red-400 animate-pulse' : (${level.css == 'high'} ? 'bg-orange-400' : (${level.css == 'medium'} ? 'bg-amber-400' : 'bg-emerald-400'))"></span>
+    <span th:text="${level.label}">Critical</span>
+</span>
+
+<span th:fragment="statusBadge(status)"
+      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono font-medium border"
+      th:classappend="${status.css == 'ok'} ? 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60' : (${status.css == 'warn'} ? 'bg-amber-950/60 text-amber-300 border-amber-800/60' : (${status.css == 'danger'} ? 'bg-rose-950/60 text-rose-300 border-rose-800/60' : 'bg-sky-950/60 text-sky-300 border-sky-800/60'))">
+    <span th:text="${status.label}">Reported</span>
+</span>
+
+<span th:fragment="priorityBadge(priority)"
+      class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border"
+      th:classappend="${priority.css == 'critical'} ? 'bg-red-950/70 text-red-300 border-red-700/60' : (${priority.css == 'high'} ? 'bg-orange-950/70 text-orange-300 border-orange-700/60' : (${priority.css == 'medium'} ? 'bg-amber-950/70 text-amber-300 border-amber-700/60' : 'bg-emerald-950/70 text-emerald-300 border-emerald-700/60'))">
+    <span th:text="${priority.label}">High</span>
+</span>
+
+<!-- Stat Card -->
+<div th:fragment="statCard(title, value, subtitle, icon, colorClass)"
+     class="glass-panel p-5 rounded-2xl relative overflow-hidden group hover:border-cyan-500/40 transition-all">
+    <div class="flex items-center justify-between">
+        <div>
+            <p class="text-xs font-medium uppercase tracking-wider text-slate-400" th:text="${title}">Active Incidents</p>
+            <p class="font-mono text-3xl font-extrabold text-white mt-1 group-hover:text-cyan-400 transition-colors" 
+               th:text="${value}">12</p>
+            <p class="text-xs text-slate-400 mt-1" th:text="${subtitle}">Real-time monitoring</p>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center p-2.5 border"
+             th:classappend="${colorClass ?: 'bg-cyan-950/50 text-cyan-400 border-cyan-800/50'}">
+            <i th:data-lucide="${icon ?: 'activity'}" class="w-6 h-6"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Section Heading -->
+<div th:fragment="sectionHeading(badge, title, subtitle)" class="text-center max-w-3xl mx-auto mb-12">
+    <span th:if="${badge}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-950/80 text-cyan-400 border border-cyan-800/50 mb-3"
+          th:text="${badge}">
+        CASCADE ENGINE
+    </span>
+    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight" th:text="${title}">
+        Section Title
+    </h2>
+    <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed" th:text="${subtitle}">
+        Section subtitle explaining the core value.
+    </p>
+</div>
+</html>
