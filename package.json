@@ -1,0 +1,19 @@
+{
+  "name": "civicshield",
+  "version": "1.0.0",
+  "description": "CivicShield – Civic Intelligence & Crisis Vigilance Shield",
+  "scripts": {
+    "dev": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn spring-boot:run -Dspring-boot.run.profiles=demo",
+    "start": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn spring-boot:run -Dspring-boot.run.profiles=demo",
+    "build": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn clean package -DskipTests",
+    "test": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn test"
+  },
+  "keywords": [
+    "crisis-vigilance",
+    "cascade-prediction",
+    "spring-boot",
+    "java"
+  ],
+  "author": "CivicShield",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: civicshield
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: demo
+      - key: PORT
+        value: 8080
