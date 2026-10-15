@@ -1,10 +1,8 @@
 package com.civicshield.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Input for the What-If simulator (public demo and portal).

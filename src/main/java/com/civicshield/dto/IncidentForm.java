@@ -4,7 +4,6 @@ import com.civicshield.model.IncidentType;
 import com.civicshield.model.Severity;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /** Form backing object for "Report Incident". */
 @Data

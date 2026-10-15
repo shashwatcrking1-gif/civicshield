@@ -1,10 +1,8 @@
 package com.civicshield.dto;
 
 import com.civicshield.model.RiskLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /** One node of the cascade chain (e.g. Flood 81%). */
 @Data

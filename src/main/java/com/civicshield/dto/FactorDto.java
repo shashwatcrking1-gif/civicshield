@@ -1,9 +1,7 @@
 package com.civicshield.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /** Explainable-AI factor: how much an input contributed to the risk score. */
 @Data

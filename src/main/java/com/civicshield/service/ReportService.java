@@ -4,7 +4,6 @@ import com.civicshield.dto.DashboardStats;
 import com.civicshield.dto.SimulationResult;
 import com.civicshield.model.*;
 import com.civicshield.repository.IncidentRepository;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
