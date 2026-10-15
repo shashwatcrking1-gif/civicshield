@@ -3,7 +3,6 @@ package com.civicshield.controller;
 import com.civicshield.model.Recommendation;
 import com.civicshield.model.RecommendationStatus;
 import com.civicshield.service.RecommendationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

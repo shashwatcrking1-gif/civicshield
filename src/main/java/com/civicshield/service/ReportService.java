@@ -6,7 +6,6 @@ import com.civicshield.model.*;
 import com.civicshield.repository.IncidentRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

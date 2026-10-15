@@ -4,7 +4,6 @@ import com.civicshield.model.IncidentType;
 import com.civicshield.model.RiskLevel;
 import com.civicshield.service.ReportService;
 import com.civicshield.service.ReportService.ReportRow;
-import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

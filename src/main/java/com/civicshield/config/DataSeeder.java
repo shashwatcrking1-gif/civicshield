@@ -6,7 +6,6 @@ import com.civicshield.repository.*;
 import com.civicshield.service.RiskAnalysisService;
 import com.civicshield.service.SimulationService;
 import com.civicshield.service.UserService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;

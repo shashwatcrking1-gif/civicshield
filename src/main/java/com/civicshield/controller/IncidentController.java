@@ -5,7 +5,6 @@ import com.civicshield.dto.SimulationResult;
 import com.civicshield.model.*;
 import com.civicshield.service.*;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

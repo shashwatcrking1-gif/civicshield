@@ -8,7 +8,6 @@ import com.civicshield.model.Severity;
 import com.civicshield.repository.RiskAnalysisRepository;
 import com.civicshield.service.CascadeRiskEngine.EngineInput;
 import com.civicshield.service.CascadeRiskEngine.ZoneProfile;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

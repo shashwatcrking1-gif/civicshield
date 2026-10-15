@@ -6,7 +6,6 @@ import com.civicshield.dto.SimulationResult;
 import com.civicshield.service.CascadeRiskEngine;
 import com.civicshield.service.CascadeRiskEngine.ZoneProfile;
 import com.civicshield.service.SimulationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

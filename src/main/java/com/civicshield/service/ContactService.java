@@ -3,7 +3,6 @@ package com.civicshield.service;
 import com.civicshield.dto.ContactForm;
 import com.civicshield.model.ContactMessage;
 import com.civicshield.repository.ContactMessageRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

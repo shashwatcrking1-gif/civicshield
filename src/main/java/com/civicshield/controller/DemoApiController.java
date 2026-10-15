@@ -4,7 +4,6 @@ import com.civicshield.dto.SimulationRequest;
 import com.civicshield.dto.SimulationResult;
 import com.civicshield.service.SimulationService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

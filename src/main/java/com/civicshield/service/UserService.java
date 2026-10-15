@@ -4,7 +4,6 @@ import com.civicshield.dto.UserForm;
 import com.civicshield.exception.ResourceNotFoundException;
 import com.civicshield.model.User;
 import com.civicshield.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

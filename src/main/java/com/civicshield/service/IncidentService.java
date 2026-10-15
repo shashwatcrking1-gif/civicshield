@@ -5,7 +5,6 @@ import com.civicshield.exception.ResourceNotFoundException;
 import com.civicshield.model.*;
 import com.civicshield.repository.IncidentRepository;
 import jakarta.persistence.criteria.Predicate;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

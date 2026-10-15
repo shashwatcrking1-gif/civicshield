@@ -6,7 +6,6 @@ import com.civicshield.exception.ResourceNotFoundException;
 import com.civicshield.model.Simulation;
 import com.civicshield.model.User;
 import com.civicshield.repository.SimulationRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

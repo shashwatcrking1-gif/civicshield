@@ -8,7 +8,6 @@ import com.civicshield.service.IncidentService;
 import com.civicshield.service.RiskAnalysisService;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

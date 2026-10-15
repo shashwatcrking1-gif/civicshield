@@ -5,7 +5,6 @@ import com.civicshield.model.Incident;
 import com.civicshield.model.RiskAnalysis;
 import com.civicshield.service.IncidentService;
 import com.civicshield.service.RiskAnalysisService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

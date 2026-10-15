@@ -6,7 +6,6 @@ import com.civicshield.model.Recommendation;
 import com.civicshield.model.RecommendationStatus;
 import com.civicshield.model.RiskAnalysis;
 import com.civicshield.repository.RecommendationRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

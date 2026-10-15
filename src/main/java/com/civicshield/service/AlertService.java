@@ -5,7 +5,6 @@ import com.civicshield.dto.SimulationResult;
 import com.civicshield.exception.ResourceNotFoundException;
 import com.civicshield.model.*;
 import com.civicshield.repository.AlertRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
