@@ -95,5 +95,32 @@ public class MapController {
         private String chainSummary;
         private String explanation;
         private String reportedDate;
+
+        public MapIncidentItem() {
+        }
+
+        public MapIncidentItem(Long incidentId, String code, String type, String typeIcon,
+                               String location, Double latitude, Double longitude, String severity,
+                               String severityCss, String status, String statusCss, Integer riskScore,
+                               String riskLevel, String riskColor, String chainSummary, String explanation,
+                               String reportedDate) {
+            this.incidentId = incidentId;
+            this.code = code;
+            this.type = type;
+            this.typeIcon = typeIcon;
+            this.location = location;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.severity = severity;
+            this.severityCss = severityCss;
+            this.status = status;
+            this.statusCss = statusCss;
+            this.riskScore = riskScore;
+            this.riskLevel = riskLevel;
+            this.riskColor = riskColor;
+            this.chainSummary = chainSummary;
+            this.explanation = explanation;
+            this.reportedDate = reportedDate;
+        }
     }
 }
