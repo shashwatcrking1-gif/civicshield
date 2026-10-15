@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "incidents")
 @Getter
 @Setter
-@Builder
 public class Incident {
 
     @Id
@@ -48,6 +47,7 @@ public class Incident {
     public Incident() {
     }
 
+    @Builder
     public Incident(Long incidentId, User reportedBy, IncidentType incidentType, String location,
                     Double latitude, Double longitude, Severity severity, IncidentStatus status,
                     LocalDateTime reportedDate) {

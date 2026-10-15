@@ -8,7 +8,6 @@ import lombok.*;
 @Table(name = "users")
 @Getter
 @Setter
-@Builder
 public class User {
 
     @Id
@@ -29,13 +28,13 @@ public class User {
     private Role role;
 
     /** Disabled users cannot sign in (managed by ADMIN). */
-    @Builder.Default
     @Column(nullable = false)
     private boolean enabled = true;
 
     public User() {
     }
 
+    @Builder
     public User(Long userId, String name, String email, String password, Role role, boolean enabled) {
         this.userId = userId;
         this.name = name;

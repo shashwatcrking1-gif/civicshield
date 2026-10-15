@@ -8,7 +8,6 @@ import lombok.*;
 @Table(name = "simulations")
 @Getter
 @Setter
-@Builder
 public class Simulation {
 
     @Id
@@ -37,6 +36,7 @@ public class Simulation {
     public Simulation() {
     }
 
+    @Builder
     public Simulation(Long simulationId, User createdBy, String scenarioName, Double rainfallLevel,
                       Double trafficLevel, Double predictedRisk, String result) {
         this.simulationId = simulationId;

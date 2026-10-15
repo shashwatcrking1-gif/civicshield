@@ -11,7 +11,6 @@ import java.util.List;
 
 /** Output of the cascade engine (Java) or the optional Python AI service. */
 @Data
-@Builder
 public class SimulationResult {
 
     private int riskScore;
@@ -20,9 +19,7 @@ public class SimulationResult {
     /** JAVA_CASCADE_ENGINE or PYTHON_AI. */
     private String engine;
 
-    @Builder.Default
     private List<CascadeNodeDto> nodes = new ArrayList<>();
-    @Builder.Default
     private List<FactorDto> factors = new ArrayList<>();
 
     /** One-line explainable-AI summary. */
@@ -30,14 +27,13 @@ public class SimulationResult {
     /** Where intervening breaks the chain most effectively. */
     private String breakPoint;
 
-    @Builder.Default
     private List<String> consequences = new ArrayList<>();
-    @Builder.Default
     private List<ActionDto> actions = new ArrayList<>();
 
     public SimulationResult() {
     }
 
+    @Builder
     public SimulationResult(int riskScore, RiskLevel riskLevel, String zone, String engine,
                             List<CascadeNodeDto> nodes, List<FactorDto> factors, String explanation,
                             String breakPoint, List<String> consequences, List<ActionDto> actions) {

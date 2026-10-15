@@ -8,7 +8,6 @@ import lombok.*;
 @Table(name = "data_sources")
 @Getter
 @Setter
-@Builder
 public class DataSource {
 
     @Id
@@ -31,6 +30,7 @@ public class DataSource {
     public DataSource() {
     }
 
+    @Builder
     public DataSource(Long sourceId, String sourceName, String sourceType, String location, DataStatus dataStatus) {
         this.sourceId = sourceId;
         this.sourceName = sourceName;

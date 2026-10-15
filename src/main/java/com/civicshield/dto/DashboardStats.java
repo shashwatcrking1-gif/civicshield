@@ -11,7 +11,6 @@ import java.util.Map;
 
 /** Aggregated numbers for the portal dashboard. */
 @Data
-@Builder
 public class DashboardStats {
     private long activeIncidents;
     private long highRiskZones;
@@ -20,7 +19,6 @@ public class DashboardStats {
     private long totalIncidents;
 
     /** Risk level label → number of incidents (latest analysis). */
-    @Builder.Default
     private Map<String, Long> riskDistribution = new LinkedHashMap<>();
 
     // "Top cascading threat"
@@ -31,12 +29,12 @@ public class DashboardStats {
     private Integer topThreatScore;
     private RiskLevel topThreatLevel;
     private String topThreatExplanation;
-    @Builder.Default
     private List<CascadeNodeDto> topThreatNodes = new ArrayList<>();
 
     public DashboardStats() {
     }
 
+    @Builder
     public DashboardStats(long activeIncidents, long highRiskZones, long criticalAlerts, long simulationsRun,
                           long totalIncidents, Map<String, Long> riskDistribution, Long topThreatIncidentId,
                           String topThreatCode, String topThreatLocation, String topThreatType,

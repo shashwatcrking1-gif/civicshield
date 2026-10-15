@@ -10,7 +10,6 @@ import lombok.Data;
  * The intervention flags let authorities test how to "break the chain".
  */
 @Data
-@Builder
 public class SimulationRequest {
 
     @Size(max = 120, message = "Scenario name must be at most 120 characters")
@@ -48,6 +47,7 @@ public class SimulationRequest {
     public SimulationRequest() {
     }
 
+    @Builder
     public SimulationRequest(String scenarioName, String zone, Double rainfall, Double traffic,
                              Double drainage, boolean pumps, boolean diversion, boolean greenCorridor,
                              boolean hospitalSurge, boolean save) {

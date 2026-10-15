@@ -8,7 +8,6 @@ import lombok.*;
 @Table(name = "recommendations")
 @Getter
 @Setter
-@Builder
 public class Recommendation {
 
     @Id
@@ -33,6 +32,7 @@ public class Recommendation {
     public Recommendation() {
     }
 
+    @Builder
     public Recommendation(Long recommendationId, RiskAnalysis riskAnalysis, String action,
                           Priority priority, RecommendationStatus status) {
         this.recommendationId = recommendationId;

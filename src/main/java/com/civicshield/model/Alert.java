@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "alerts")
 @Getter
 @Setter
-@Builder
 public class Alert {
 
     @Id
@@ -38,6 +37,7 @@ public class Alert {
     public Alert() {
     }
 
+    @Builder
     public Alert(Long alertId, RiskAnalysis riskAnalysis, String message, Priority priority,
                  AlertStatus alertStatus, LocalDateTime alertDate) {
         this.alertId = alertId;

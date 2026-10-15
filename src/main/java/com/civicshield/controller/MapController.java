@@ -76,7 +76,6 @@ public class MapController {
     }
 
     @Data
-    @Builder
     public static class MapIncidentItem {
         private Long incidentId;
         private String code;
@@ -99,6 +98,7 @@ public class MapController {
         public MapIncidentItem() {
         }
 
+        @Builder
         public MapIncidentItem(Long incidentId, String code, String type, String typeIcon,
                                String location, Double latitude, Double longitude, String severity,
                                String severityCss, String status, String statusCss, Integer riskScore,

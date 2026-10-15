@@ -6,7 +6,6 @@ import lombok.Data;
 
 /** One node of the cascade chain (e.g. Flood 81%). */
 @Data
-@Builder
 public class CascadeNodeDto {
     private String key;
     private String label;
@@ -22,6 +21,7 @@ public class CascadeNodeDto {
     public CascadeNodeDto() {
     }
 
+    @Builder
     public CascadeNodeDto(String key, String label, String icon, int probability,
                           double severity, RiskLevel level, String consequence) {
         this.key = key;

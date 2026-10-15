@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "risk_analyses")
 @Getter
 @Setter
-@Builder
 public class RiskAnalysis {
 
     @Id
@@ -37,6 +36,7 @@ public class RiskAnalysis {
     public RiskAnalysis() {
     }
 
+    @Builder
     public RiskAnalysis(Long riskId, Incident incident, Double riskScore, RiskLevel riskLevel,
                         String predictedImpact, LocalDateTime analysisDate) {
         this.riskId = riskId;

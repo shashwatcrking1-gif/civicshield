@@ -5,7 +5,6 @@ import lombok.Data;
 
 /** Explainable-AI factor: how much an input contributed to the risk score. */
 @Data
-@Builder
 public class FactorDto {
     private String key;
     private String name;
@@ -18,6 +17,7 @@ public class FactorDto {
     public FactorDto() {
     }
 
+    @Builder
     public FactorDto(String key, String name, int value, int contribution, String description) {
         this.key = key;
         this.name = name;

@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "contact_messages")
 @Getter
 @Setter
-@Builder
 public class ContactMessage {
 
     @Id
@@ -32,6 +31,7 @@ public class ContactMessage {
     public ContactMessage() {
     }
 
+    @Builder
     public ContactMessage(Long id, String name, String email, String message, LocalDateTime createdDate) {
         this.id = id;
         this.name = name;
