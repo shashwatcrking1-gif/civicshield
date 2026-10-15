@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "incidents")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Incident {
 
@@ -46,6 +44,23 @@ public class Incident {
 
     @Column(nullable = false)
     private LocalDateTime reportedDate;
+
+    public Incident() {
+    }
+
+    public Incident(Long incidentId, User reportedBy, IncidentType incidentType, String location,
+                    Double latitude, Double longitude, Severity severity, IncidentStatus status,
+                    LocalDateTime reportedDate) {
+        this.incidentId = incidentId;
+        this.reportedBy = reportedBy;
+        this.incidentType = incidentType;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.severity = severity;
+        this.status = status;
+        this.reportedDate = reportedDate;
+    }
 
     @PrePersist
     void onCreate() {
