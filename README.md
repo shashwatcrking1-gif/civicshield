@@ -104,6 +104,33 @@ export AI_BASE_URL="http://localhost:8000"
 - **Data Feeds** (`/portal/data-sources`) – Health monitoring (Online, Delayed, Offline) for weather radars, drainage sensors, and traffic feeds.
 - **User Admin** (`/portal/admin/users`) – Admin user management, role assignments, and account enable/disable controls.
 
+### 3. REST API v1 (`/api/v1/**`, Bearer Token Auth)
+Full headless REST API compliant with [`docs/API.md`](docs/API.md):
+- **Auth**: `POST /api/v1/auth/login` (rate-limited, returns 256-bit opaque Bearer token), `POST /api/v1/auth/logout`, `GET /api/v1/auth/me`
+- **System**: `GET /api/v1/system/status` (public), `GET /api/v1/data-sources`
+- **Dashboard**: `GET /api/v1/dashboard/summary`, `GET /api/v1/dashboard/trend`, `GET /api/v1/dashboard/activity`
+- **Incidents**: `GET /api/v1/incidents` (filter/sort/paginate), `POST /api/v1/incidents`, `GET /api/v1/incidents/{id}`, `PUT /api/v1/incidents/{id}`, `PATCH /api/v1/incidents/{id}/status`, `GET /api/v1/incidents/{id}/alerts`, `GET /api/v1/incidents/{id}/recommendations`
+- **Cascade Risk**: `GET /api/v1/incidents/{id}/cascade`, `POST /api/v1/incidents/{id}/cascade`, `GET /api/v1/risk/model`
+- **Map & Zones**: `GET /api/v1/map/incidents`, `GET /api/v1/zones`
+- **Alerts**: `GET /api/v1/alerts`, `GET /api/v1/alerts/counts`, `POST /api/v1/alerts/{id}/acknowledge`, `POST /api/v1/alerts/{id}/resolve`
+- **Recommendations**: `GET /api/v1/recommendations`, `GET /api/v1/recommendations/counts`, `POST /api/v1/recommendations/{id}/approve`, `POST /api/v1/recommendations/{id}/dismiss`
+- **What-If Simulations**: `GET /api/v1/simulations/parameters`, `POST /api/v1/simulations/run`, `GET /api/v1/simulations`, `DELETE /api/v1/simulations/{id}`
+- **Audit Reports**: `GET /api/v1/reports/summary`, `GET /api/v1/reports/incidents.csv` (RFC-4180 CSV export)
+- **User Management**: `GET /api/v1/users`, `POST /api/v1/users`, `PUT /api/v1/users/{id}`, `POST /api/v1/users/{id}/toggle-enabled`
+
+---
+
+## 🧪 Automated Testing
+
+CivicShield features a comprehensive Spring Boot test suite covering the cascade math engine, domain services, security filter chains, role-based access control, and REST APIs:
+
+```bash
+# Run all unit and integration tests
+npm test
+# Or directly via Maven
+mvn test
+```
+
 ---
 
 ## 🧮 Mathematical Cascade Engine

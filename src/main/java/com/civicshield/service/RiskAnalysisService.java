@@ -99,6 +99,14 @@ public class RiskAnalysisService {
         return map;
     }
 
+    public RiskAnalysis latestFor(Long incidentId) {
+        return latestByIncident().get(incidentId);
+    }
+
+    public java.util.List<RiskAnalysis> forIncident(Long incidentId) {
+        return repository.findByIncident_IncidentIdOrderByAnalysisDateDesc(incidentId);
+    }
+
     private String buildImpact(SimulationResult r) {
         String text = r.getExplanation() + " Predicted chain: " + r.chainSummary(6) + ".";
         return text.length() > 2000 ? text.substring(0, 2000) : text;

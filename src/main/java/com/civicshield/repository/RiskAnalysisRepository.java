@@ -12,4 +12,5 @@ public interface RiskAnalysisRepository extends JpaRepository<RiskAnalysis, Long
     Optional<RiskAnalysis> findTopByIncidentOrderByAnalysisDateDesc(Incident incident);
 
     List<RiskAnalysis> findAllByOrderByAnalysisDateDesc();
+    List<RiskAnalysis> findByIncident_IncidentIdOrderByAnalysisDateDesc(Long incidentId);
 }
