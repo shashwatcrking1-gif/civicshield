@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn spring-boot:run -Dspring-boot.run.profiles=demo",
     "start": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn spring-boot:run -Dspring-boot.run.profiles=demo",
-    "build": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn clean package -DskipTests",
+    "build": "node scripts/build.js",
     "test": "export JAVA_HOME=\"${JAVA_HOME:-/opt/homebrew/opt/openjdk@17}\"; export PATH=\"$JAVA_HOME/bin:$PATH\"; mvn test"
   },
   "keywords": [
