@@ -15,7 +15,6 @@ import com.civicshield.repository.SimulationRepository;
 import com.civicshield.repository.UserRepository;
 import com.civicshield.service.CascadeRiskEngine;
 import com.civicshield.service.CascadeRiskEngine.EngineInput;
-import com.civicshield.service.CascadeRiskEngine.ZoneProfile;
 import com.civicshield.service.SimulationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

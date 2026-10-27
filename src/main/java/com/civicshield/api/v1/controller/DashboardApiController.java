@@ -2,7 +2,6 @@ package com.civicshield.api.v1.controller;
 
 import com.civicshield.api.v1.dto.CascadeDtos.CascadeNode;
 import com.civicshield.api.v1.dto.DashboardDtos.*;
-import com.civicshield.dto.CascadeNodeDto;
 import com.civicshield.dto.SimulationResult;
 import com.civicshield.model.*;
 import com.civicshield.repository.AlertRepository;
