@@ -25,11 +25,14 @@ public class AuthController {
         model.addAttribute("hasError", error != null);
         model.addAttribute("hasLogout", logout != null);
         return "login";
+    }
 
     @GetMapping("/register")
     public String register(Model model) {
-        // Add any needed model attributes for the registration page
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/portal/dashboard";
+        }
         return "register";
-    }
     }
 }
