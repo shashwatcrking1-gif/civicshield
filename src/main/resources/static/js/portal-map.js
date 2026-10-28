@@ -19,16 +19,24 @@
             scrollWheelZoom: !(options && options.static)
         }).setView([defaultLat, defaultLng], defaultZoom);
 
-        // CartoDB Dark Matter / Positron based on theme
+        // Keyless basemaps: OpenStreetMap (light) / Esri Dark Gray Canvas (dark)
         const isLight = document.documentElement.classList.contains('light');
-        const tileLayerUrl = isLight 
-            ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-            : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-
-        L.tileLayer(tileLayerUrl, {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            maxZoom: 19
-        }).addTo(map);
+        if (isLight) {
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+        } else {
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+                maxNativeZoom: 16,
+                maxZoom: 19
+            }).addTo(map);
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                maxNativeZoom: 16,
+                maxZoom: 19
+            }).addTo(map);
+        }
 
         const markersLayer = L.layerGroup().addTo(map);
         const zonesLayer = L.layerGroup().addTo(map);

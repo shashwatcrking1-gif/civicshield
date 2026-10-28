@@ -119,8 +119,14 @@
             const lng = parseFloat(document.getElementById('lngInput').value) || 80.2180;
 
             pickerMap = L.map('picker-map').setView([lat, lng], 13);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; CARTO'
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; &copy; OpenStreetMap contributors',
+                maxNativeZoom: 16,
+                maxZoom: 19
+            }).addTo(pickerMap);
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                maxNativeZoom: 16,
+                maxZoom: 19
             }).addTo(pickerMap);
 
             pickerMarker = L.marker([lat, lng], { draggable: true }).addTo(pickerMap);
